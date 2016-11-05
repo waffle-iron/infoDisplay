@@ -16,6 +16,8 @@ import org.telegram.telegrambots.logging.BotLogger;
  * @author florian
  * @version 1.0
  * @date 25 of October of 2016
+ *
+ * This command sets the command status of a user to noCommand.
  */
 public class CancelCommand extends BotCommand {
 
