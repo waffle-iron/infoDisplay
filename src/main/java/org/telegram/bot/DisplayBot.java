@@ -137,7 +137,6 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
                                 new String[]{update.getMessage().getText()});
 
                     }
-//TOBUG Fix the receiving of uncompressed images (strange)
                 } else if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
                                     .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE)) {
 
