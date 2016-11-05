@@ -98,7 +98,6 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
             if (update.hasMessage()) {
 
                 if (update.getMessage().hasText()) {
-//TOFEAT Add if clause that checks for NO_COMMAND and tells the user about it and returns help content
                     if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
                             .equals(Config.Bot.ASK_COMMAND_WRITE_QUESTION)) {
 
