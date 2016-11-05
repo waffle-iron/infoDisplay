@@ -10,7 +10,7 @@ import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
-//TODOC add javadoc /documentation
+
 /**
  * @author florian
  * @version 1.0

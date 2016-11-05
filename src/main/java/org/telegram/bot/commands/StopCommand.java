@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import static org.telegram.bot.Main.getFilteredUsername;
 import static org.telegram.bot.Main.sendOnErrorOccurred;
-//TODOC add javadoc /documentation
+
 /**
  * @author florian
  * @version 1.0
