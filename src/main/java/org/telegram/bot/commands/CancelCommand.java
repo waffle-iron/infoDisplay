@@ -1,5 +1,5 @@
 package org.telegram.bot.commands;
-//TODOC add javadoc /documentation
+
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot;

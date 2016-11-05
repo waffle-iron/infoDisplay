@@ -13,7 +13,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
 import static org.telegram.bot.Main.sendOnErrorOccurred;
-//TODOC add javadoc /documentation
+
 /**
  * @author florian
  * @version 1.0

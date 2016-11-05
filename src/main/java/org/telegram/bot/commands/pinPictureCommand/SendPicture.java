@@ -17,7 +17,7 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-//TODOC add javadoc /documentation
+
 /**
  * @author florian
  * @version 1.0
