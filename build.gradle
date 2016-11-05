@@ -1,0 +1,77 @@
+group 'liketechnik'
+
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile 'com.github.caprica:vlcj:vlcj-3+'
+
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1+'
+    compile 'org.apache.commons:commons-configuration2:2+'
+    compile 'commons-beanutils:commons-beanutils:1.9.3'
+
+    compile group: 'org.telegram', name: 'telegrambots', version: '2+'
+}
+
+jar {
+    manifest {
+        attributes("Main-Class": 'liketechnik.InfoDisplay.Display')
+    }
+}
+
+
+
+task createDisplayJarArchive(type: Jar, dependsOn: [':build', ':updateDisplayFileClass', 'updateConfigClass']) {
+    from 'build/classes/main/'
+    manifest {
+        attributes("Main-Class": 'liketechnik.InfoDisplay.Display')
+    }
+    exclude '**telegram**'
+    classifier 'Display'
+    into ''
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+task createBotJarArchive(type: Jar, dependsOn: [':build', ':updateDisplayFileClass', 'updateConfigClass']) {
+    from 'build/classes/main/'
+    manifest {
+        attributes("Main-Class": 'org.telegram.bot.Main')
+    }
+    exclude '**liketechnik**'
+    classifier 'Bot'
+    into ''
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+
+//task updateDisplayFileClass(type: Copy) {
+    //from 'src/main/java/'
+    //include 'DisplayFile**'
+    //def myProps = new Properties()
+    //file("gradle.properties").withInputStream {
+    //    myProps.load(it);
+    //}
+    //filter(ReplaceTokens, tokens: myProps)
+    //into 'src/main/java/liketechnik/InfoDisplay'
+    //println ReplaceTokens.properties
+    //into 'src/main/java/'
+//}
+ant.importBuild 'build.xml'
+
+compileJava.mustRunAfter(updateDisplayFileClass)
+compileJava.mustRunAfter(updateConfigClass)
+
+task getHomeDir << {
+    println gradle.gradleHomeDir
+}

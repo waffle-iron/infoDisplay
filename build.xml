@@ -1,0 +1,26 @@
+<project>
+    <target name="updateDisplayFileClass">
+        <copy file="src/main/java/DisplayFile.java" toFile="src/main/java/liketechnik/InfoDisplay/DisplayFile.java">
+            <filterset begintoken="//" endtoken="*">
+                <filter token="packageStatement" value="package liketechnik.InfoDisplay;" />
+            </filterset>
+        </copy>
+        <copy file="src/main/java/DisplayFile.java" toFile="src/main/java/org/telegram/bot/DisplayFile.java">
+            <filterset begintoken="//" endtoken="*">
+                <filter token="packageStatement" value="package org.telegram.bot;" />
+            </filterset>
+        </copy>
+    </target>
+    <target name="updateConfigClass">
+        <copy file="src/main/java/Config.java" toFile="src/main/java/liketechnik/InfoDisplay/Config.java">
+            <filterset begintoken="//" endtoken="*">
+                <filter token="packageStatement" value="package liketechnik.InfoDisplay;" />
+            </filterset>
+        </copy>
+        <copy file="src/main/java/Config.java" toFile="src/main/java/org/telegram/bot/Config.java">
+            <filterset begintoken="//" endtoken="*">
+                <filter token="packageStatement" value="package org.telegram.bot;" />
+            </filterset>
+        </copy>
+    </target>
+</project>
