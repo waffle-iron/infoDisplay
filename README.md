@@ -9,11 +9,11 @@ without the need to set up a server on ones own.
 
 ## Use ##
 
-# Prerequisites #
+### Prerequisites ###
 
 Create a bot inside Telegram with @BotFather. Remember the bot's name and token.
 
-# Build and Execution #
+### Build and Execution ###
 
 Download the source code and edit Config.java (fill in the missing Strings with your corresponding text). Then execute the gradle tasks createBotJarArchive
 and createDisplayJarArchive. The output .jar-Archives represent the 
