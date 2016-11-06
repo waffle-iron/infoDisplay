@@ -49,7 +49,7 @@ import java.nio.file.Path;
 //TODOC This needs further docuemtation and code rewriting but works at the moment...
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 24 of September of 2016
  */
 public class Display {

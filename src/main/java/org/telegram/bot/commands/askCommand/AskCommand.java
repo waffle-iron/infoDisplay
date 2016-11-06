@@ -40,7 +40,7 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 24 of October of 2016
  *
  * This command lets users ask questions to the administrator of this bot.

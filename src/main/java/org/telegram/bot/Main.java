@@ -42,7 +42,7 @@ import java.util.logging.Level;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 21 of October of 2016
  */
 public class Main {

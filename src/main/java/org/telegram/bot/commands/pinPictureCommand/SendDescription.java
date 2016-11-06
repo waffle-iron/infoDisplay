@@ -38,7 +38,7 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 01 of November 2016
  *
  * This command gets executed if a user sends '/answer' and sent a title to the bot.

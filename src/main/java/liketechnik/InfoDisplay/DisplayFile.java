@@ -27,7 +27,7 @@ package liketechnik.InfoDisplay;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 24 of September of 2016
  *
  * This class represents a file that gets displayed on the virtual info display.

@@ -43,7 +43,7 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 25 of October of 2016
  *
  * This command gets executed if  a user sends '/answer' to the bot and lets the administrator answer asked questions.

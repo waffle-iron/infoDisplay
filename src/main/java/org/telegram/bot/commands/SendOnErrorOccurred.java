@@ -37,7 +37,7 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 01 of November of 2016
  *
  * This command gets executed if an error occurs in one of the other commands.

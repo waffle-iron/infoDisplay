@@ -40,7 +40,7 @@ import java.nio.file.FileAlreadyExistsException;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 01 of November 2016
  *
  * This class handles an incoming message containing the title for a new picture.

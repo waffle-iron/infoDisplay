@@ -45,7 +45,7 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 22 of October of 2016
  *
  * This command gets executed if a user uses the bot for the first time.

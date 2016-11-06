@@ -30,7 +30,7 @@ import java.nio.file.Path;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 22 of October of 2016
  *
  * This is just a storage for all values that stay the same.

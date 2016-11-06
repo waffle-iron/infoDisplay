@@ -26,7 +26,7 @@
 package org.telegram.bot;
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 24 of September of 2016
  */
 public class DisplayFile {

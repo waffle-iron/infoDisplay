@@ -45,7 +45,7 @@ import java.nio.file.Path;
 
 /**
  * @author liketechnik
- * @version 1.0
+ * @version 1.0.1
  * @date 01 of November 2016
  *
  * This command gets executed if a user sent '/pin_picture' and followed the process (sending title, description and
