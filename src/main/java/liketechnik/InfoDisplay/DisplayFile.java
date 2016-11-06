@@ -29,6 +29,8 @@ package liketechnik.InfoDisplay;
  * @author liketechnik
  * @version 1.0
  * @date 24 of September of 2016
+ *
+ * This class represents a file that gets displayed on the virtual info display.
  */
 public class DisplayFile {
 
@@ -39,6 +41,14 @@ public class DisplayFile {
     private String type;
     private String fileName;
 
+    /**
+     * Create a new display file.
+     * @param displayDuration Hwo long the picture should be displayed.
+     * @param type The type of the file (e. g. image or video). Use the DISPLAY_FILE_TYPE strings from
+     * {@link Config.Bot}.
+     * @param fileName The path to the file. This should NOT be a relative path.
+     * @throws IllegalArgumentException The type passed in is invalid.
+     */
     public DisplayFile(int displayDuration, String type, String fileName) throws IllegalArgumentException {
         if (!type.equals(Config.Bot.DISPLAY_FILE_TYPE_IMAGE)) {
             throw new IllegalArgumentException("No known type: " + type);

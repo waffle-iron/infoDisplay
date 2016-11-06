@@ -47,15 +47,27 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
  * @author liketechnik
  * @version 1.0
  * @date 22 of October of 2016
+ *
+ * This command gets executed if a user uses the bot for the first time.
  */
 public class StartCommand extends BotCommand {
 
     public static final String LOGTAG = "STARTCOMMAND";
 
+    /**
+     * Set the identifier and a short description.
+     */
     public StartCommand() {
         super("start", "With this command you can start the bot. \n    Mit diesem Befehl kannst du den Bot starten");
     }
 
+    /**
+     * Save that the user is active and tell the user about what this bot does.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param strings
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
 

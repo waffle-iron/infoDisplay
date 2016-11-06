@@ -46,15 +46,28 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
  * @author liketechnik
  * @version 1.0
  * @date 24 of October of 2016
+ *
+ * This commands gets executed if a user sends '/register'.
  */
 public class RegisterCommand extends BotCommand {
 
     public static final String LOGTAG = "REGISTERCOMMAND";
 
+    /**
+     * Set the identifier and short description.
+     */
     public RegisterCommand() {
         super("register", "Registriere dich als Benutzer um Bilder auf das virtuelle Brett hochladen zu können.");
     }
 
+    /**
+     * Check if the user is registered, asked for registration yet or is now asking for registration, save his status
+     * and tell him about it.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

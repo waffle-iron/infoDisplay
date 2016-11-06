@@ -48,6 +48,9 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
  * @author liketechnik
  * @version 1.0
  * @date 23 of October of 2016
+ *
+ * This commands gets executed if a user sends '/help' to the bot or if the information about the bot and its
+ * commands is needed.
  */
 public class HelpCommand extends BotCommand {
 
@@ -55,11 +58,22 @@ public class HelpCommand extends BotCommand {
 
     private final ICommandRegistry commandRegistry;
 
+    /**
+     * Set the identifier and a short description of this bot.
+     * @param commandRegistry
+     */
     public HelpCommand(ICommandRegistry commandRegistry) {
         super("help", "Wozu dient dieser Bot und wie kannst du den Bot kontrollieren?");
         this.commandRegistry = commandRegistry;
     }
 
+    /**
+     * Iterate through the registered commands and send them together with their description to the user.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

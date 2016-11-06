@@ -45,15 +45,27 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
  * @author liketechnik
  * @version 1.0
  * @date 23 of October of 2016
+ *
+ * this command gets executed if a user stops the bot.
  */
 public class StopCommand extends BotCommand {
 
     public static final String LOGTAG = "STOPCOMMAND";
 
+    /**
+     * Set the identifier and a short description.
+     */
     public StopCommand() {
         super("stop", "Mit diesem Befehl kannst du den Bot anhalten.");
     }
 
+    /**
+     * Save that the user is inactive now and tell him goodbye.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

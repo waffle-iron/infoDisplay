@@ -25,6 +25,7 @@
 
 package org.telegram.bot.commands;
 
+import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
@@ -38,15 +39,27 @@ import org.telegram.telegrambots.logging.BotLogger;
  * @author liketechnik
  * @version 1.0
  * @date 01 of November of 2016
+ *
+ * This command gets executed if an error occurs in one of the other commands.
  */
 public class SendOnErrorOccurred extends BotCommand {
 
     public static final String LOGTAG = "SENDONERROROCCURRED";
 
+    /**
+     * Send the identifier and a short description.
+     */
     public SendOnErrorOccurred() {
         super("send_error_occurred", "This command gets executed when an error happens while executing a command.");
     }
 
+    /**
+     * Inform the user that an error occurred and set his command status to {@link Config.Bot#NO_COMMAND}.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param LOGTAG
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] LOGTAG) {
 
