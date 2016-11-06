@@ -9,7 +9,13 @@ without the need to set up a server on ones own.
 
 ## Use ##
 
-Download the source code and execute the gradle tasks createBotJarArchive
+# Prerequisites #
+
+Create a bot inside Telegram with @BotFather. Remember the bot's name and token.
+
+# Build and Execution #
+
+Download the source code and edit Config.java (fill in the missing Strings with your corresponding text). Then execute the gradle tasks createBotJarArchive
 and createDisplayJarArchive. The output .jar-Archives represent the 
 two parts of the program: The bot for receiving the media, and the display
 which display the information. You can find the output in the build/libs
