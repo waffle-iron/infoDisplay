@@ -31,7 +31,7 @@ import java.nio.file.Path;
 /**
  * @author liketechnik
  * @version 1.0
- * @date 22 of Oktober of 2016
+ * @date 22 of October of 2016
  */
 public final class Config {
     public static final class Keys {

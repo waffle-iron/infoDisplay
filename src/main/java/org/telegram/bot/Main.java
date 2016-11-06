@@ -43,7 +43,7 @@ import java.util.logging.Level;
 /**
  * @author liketechnik
  * @version 1.0
- * @date 21 of Oktober of 2016
+ * @date 21 of October of 2016
  */
 public class Main {
     private static final String LOGTAG = "MAIN";
