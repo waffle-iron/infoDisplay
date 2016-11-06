@@ -38,16 +38,28 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
 /**
  * @author liketechnik
  * @version 1.0
- * @date 24 of Oktober of 2016
+ * @date 24 of October of 2016
+ *
+ * This command gets executed if a user sent '/ids'.
  */
 public class IDCommand extends BotCommand {
 
     public static final String LOGTAG = "IDCOMMAND";
 
+    /**
+     * Set the identifier and a short description.
+     */
     public IDCommand() {
         super("ids", "Zeigt dir deine Telgramm UserID und die ChatID dieses Chats an.");
     }
 
+    /**
+     * Get the chat and user id of the user and send them back to him.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

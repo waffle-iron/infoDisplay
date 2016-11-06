@@ -31,7 +31,12 @@ import java.nio.file.Path;
 /**
  * @author liketechnik
  * @version 1.0
- * @date 22 of Oktober of 2016
+ * @date 22 of October of 2016
+ *
+ * This is just a storage for all values that stay the same.
+ * It saves the keys for the values in configuration files, strings that are checked against in if
+ * clauses and therefore need to be exactly the same. Another thing is that things like paths that need to
+ * be easily find.
  */
 public final class Config {
     public static final class Keys {

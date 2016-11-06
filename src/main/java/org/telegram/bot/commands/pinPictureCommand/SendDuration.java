@@ -40,16 +40,29 @@ import org.telegram.telegrambots.logging.BotLogger;
  * @author liketechnik
  * @version 1.0
  * @date 01 of November 2016
+ *
+ * This command gets executed if a user sent '/pin_picture' and proceeds (sending description and title of the picture).
  */
 public class SendDuration extends BotCommand {
 
     public static final String LOGTAG = "PINPICTURECOMMAND_SENDDURATION";
 
+    /**
+     * Set identifier and a short description for the bot.
+     */
     public SendDuration() {
         super("send_duration", "Evaluates the answer after a user executed /pin_picture " +
                 "(and SendTitle + SendDescription).");
     }
 
+    /**
+     * Check if the sent duration is not too low and save it (if it is okay). Then tell the user to
+     * send the picture.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

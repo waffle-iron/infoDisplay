@@ -47,15 +47,29 @@ import java.nio.file.Path;
  * @author liketechnik
  * @version 1.0
  * @date 01 of November 2016
+ *
+ * This command gets executed if a user sent '/pin_picture' and followed the process (sending title, description and
+ * duration).
  */
 public class SendPicture extends BotCommand {
 
     public static final String LOGTAG = "PINPICTURECOMMAND_SENDPICTURE";
 
+    /**
+     * Set the identifier and a short description for the command.
+     */
     public SendPicture() {
         super("send_picture", "Saves the photo send by a user after he executed /pin_picture (and SendTitle, SendDescription and SendDuration).");
     }
 
+    /**
+     * Evaluate the message of a user.
+     * This is done by downloading the photo and adding the file to the list of files that are displayed.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

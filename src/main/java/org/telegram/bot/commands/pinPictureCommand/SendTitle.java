@@ -56,6 +56,15 @@ public class SendTitle extends BotCommand {
         super("send_title", "Evaluates the answer after a user executed /pin_picture.");
     }
 
+    /**
+     * Evaluate a message send by a user.
+     * This is done by saving the title sent by the user and telling him to proceed with the next step (sending the
+     * description). If a file with the sent name already exists the user is asked to choose another one.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

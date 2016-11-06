@@ -40,15 +40,29 @@ import org.telegram.telegrambots.logging.BotLogger;
  * @author liketechnik
  * @version 1.0
  * @date 01 of November 2016
+ *
+ * This command gets executed if a user sends '/answer' and sent a title to the bot.
  */
 public class SendDescription extends BotCommand {
 
     public static final String LOGTAG = "PINPICTURECOMMAND_SENDDESCRIPTION";
 
+    /**
+     * Set the identifier and a short description for the command.
+     */
     public SendDescription() {
         super("send_description", "Evaluates the answer after a user executed /pin_picture (and SendTitle).");
     }
 
+    /**
+     * Evaluate a message send by a user.
+     * This is done by saving the description and tell the user to proceed with the next step (Sending the
+     * duration of the picture).
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 

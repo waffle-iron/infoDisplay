@@ -42,16 +42,30 @@ import static org.telegram.bot.Main.sendOnErrorOccurred;
 /**
  * @author liketechnik
  * @version 1.0
- * @date 27 of Oktober of 2016
+ * @date 27 of October of 2016
+ *
+ * This command gets executed if a user sends '/pin_picture' to the bot.
  */
 public class PinPictureCommand extends BotCommand {
 
     public static final String LOGTAG = "PINPICTURECOMMAND";
 
+    /**
+     * Set the identifier and a short description for the bot.
+     */
     public PinPictureCommand() {
         super("pin_picture", "Lade ein Bild an das virtuelle Brett hoch.");
     }
 
+    /**
+     * Evaluate a message send by a user.
+     * This is done by checking if the user is allowed to upload pictures. If it is allowed, the user is requested to
+     * send a title for the picture, if not he just gets informed that he is not allowed.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 
         SendMessage answerMessage = new SendMessage();

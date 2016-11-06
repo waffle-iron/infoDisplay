@@ -42,7 +42,7 @@ import org.telegram.telegrambots.logging.BotLogger;
  * @version 1.0
  * @date 25 of October of 2016
  *
- * This command sets the command status of a user to noCommand.
+ * This command gets executed if a user sends '/cancel' to the bot.
  */
 public class CancelCommand extends BotCommand {
 
@@ -50,11 +50,23 @@ public class CancelCommand extends BotCommand {
 
     private final ICommandRegistry commandRegistry;
 
+    /**
+     * Set the identifier and a short description for the command.
+     * @param commandRegistry
+     */
     public CancelCommand(ICommandRegistry commandRegistry) {
         super("cancel", "Bricht die aktuelle Aktion ab (zum Beispiel, das Hochladen eines neuen Bildes).");
         this.commandRegistry = commandRegistry;
     }
 
+    /**
+     * Set the command status of a user to {@link Config.Bot#NO_COMMAND} and sends the help content back
+     * to the user.
+     * @param absSender
+     * @param user
+     * @param chat
+     * @param arguments
+     */
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 
