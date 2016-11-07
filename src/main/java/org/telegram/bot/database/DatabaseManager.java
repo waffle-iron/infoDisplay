@@ -435,7 +435,7 @@ public class DatabaseManager {
      */
     public Long getQuestionChatID(int questionID) throws Exception {
         setCurrentConfiguration(questionID);
-        return  currentConfiguration.getLong(Config.Keys.CHAT_ID, Config.Bot.ADMIN_CHAT_ID);
+        return  currentConfiguration.getLong(Config.Keys.CHAT_ID, this.getAdminChatId());
     }
 
     /**
@@ -790,5 +790,25 @@ public class DatabaseManager {
     public String getBotToken() throws Exception {
         setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
         return currentConfiguration.getString(Config.Keys.BOT_TOKEN_KEY);
+    }
+
+    /**
+     * Reads the admin's user id from the configuration file
+     * @return the user id of the bot's admin
+     * @throws Exception
+     */
+    public Integer getAdminUserId() throws Exception {
+        setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
+        return currentConfiguration.getInteger(Config.Keys.BOT_ADMIN_USER_ID_KEY, 0);
+    }
+
+    /**
+     * Reads the admin's chat id from the configuration file
+     * @return the chat id of the chat between bot and admin
+     * @throws Exception
+     */
+    public Integer getAdminChatId() throws Exception {
+        setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
+        return currentConfiguration.getInteger(Config.Keys.BOT_ADMIN_CHAT_ID_KEY, 0);
     }
 }

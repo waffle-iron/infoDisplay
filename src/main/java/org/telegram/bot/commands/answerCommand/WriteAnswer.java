@@ -89,7 +89,7 @@ public class WriteAnswer extends BotCommand {
             answer.setChatId(databaseManager.getQuestionChatID(selectedQuestion - 1).toString());
             answer.setText(messageBuilder.toString());
 
-            confirmation.setChatId(Config.Bot.ADMIN_CHAT_ID.toString());
+            confirmation.setChatId(databaseManager.getAdminChatId().toString());
             confirmation.setText(confirmationBuilder.toString());
 
             databaseManager.deleteQuestion(selectedQuestion - 1);

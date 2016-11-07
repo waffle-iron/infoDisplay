@@ -103,7 +103,7 @@ public class HelpCommand extends BotCommand {
                 }
             }
 
-            if (user.getId().equals(Config.Bot.ADMIN_USER_ID)) {
+            if (user.getId().equals(DatabaseManager.getInstance().getAdminUserId())) {
                 messageBuilder.append("/").append(commandRegistry.getRegisteredCommand("answer")
                         .getCommandIdentifier()).append(":\n    ").append(commandRegistry.getRegisteredCommand("answer")
                         .getDescription()).append("\n");

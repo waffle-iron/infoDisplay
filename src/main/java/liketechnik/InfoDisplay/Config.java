@@ -62,12 +62,12 @@ public final class Config {
 
         public static final String BOT_USERNAME_KEY = "botUsername";
         public static final String BOT_TOKEN_KEY = "botToken";
+
+        public static final String BOT_ADMIN_USER_ID_KEY = "botAdminUserId";
+        public static final String BOT_ADMIN_CHAT_ID_KEY = "botAdminChatId";
     }
 
     public static final class Bot {
-
-        public static final Integer ADMIN_CHAT_ID = 0;
-        public static final Integer ADMIN_USER_ID = 0;
 
         public static final String DISPLAY_FILE_TYPE_IMAGE = "image";
         public static final String HAS_PHOTO = "hasPhoto";
