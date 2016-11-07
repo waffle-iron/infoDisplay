@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://github.com/rubenlagus/TelegramBots>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * infoDisplay uses TelegramBots Java API <https://github.com/rubenlagus/TelegramBots> by Ruben Bermudez.
  * TelegramBots API is licensed under GNU General Public License version 3 <https://github.com/rubenlagus/TelegramBots>.
@@ -46,15 +46,13 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-//TODOC This needs further docuemtation and code rewriting but works at the moment...
+
 /**
  * @author liketechnik
  * @version 1.0.1
  * @date 24 of September of 2016
  */
 public class Display {
-
-    static liketechnik.InfoDisplay.DisplayFile[] displayFiles;
 
     private final JFrame frame;
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
@@ -67,8 +65,9 @@ public class Display {
 
         logger.info("Starting initialization process...");
 
+        // Check if app directory exists
         if (Files.notExists(Config.Paths.APP_HOME)) {
-            logger.debug("App directory does not exist yet, creating directory '" + Config.Paths.APP_HOME);
+            logger.info("App directory does not exist yet, creating directory '" + Config.Paths.APP_HOME);
 
             try {
                 Files.createDirectory(Config.Paths.APP_HOME);
@@ -78,16 +77,17 @@ public class Display {
             }
         }
 
+        // Can we find the native vlc library?
         logger.debug("Searching for native vlc library.");
-        boolean nativeLibraryFound = new NativeDiscovery().discover();
-        if (!nativeLibraryFound) {
+        if (!new NativeDiscovery().discover()) {
             logger.error("No native vlc library found. Terminating.");
             System.exit(1);
         }
         else {
-            logger.trace("Found native vlc library.");
+            logger.debug("Found native vlc library.");
         }
 
+        // Start window thread
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Display();
@@ -96,16 +96,22 @@ public class Display {
     }
 
     private Display() {
-        logger.setLevel(Level.INFO);
+        logger.setLevel(Level.DEBUG);
 
-        logger.debug("Initializing JFrame.");
-        logger.trace("Creating new JFrame with title {}", Config.Window.windowTitle);
+        // Create new JFrame
+        logger.info("Initializing JFrame.");
+
+        logger.debug("Creating new JFrame with title {}", Config.Window.windowTitle);
         frame = new JFrame(Config.Window.windowTitle);
+
         logger.trace("Setting window bounds.");
         frame.setBounds(Config.Window.posX, Config.Window.posY, Config.Window.width, Config.Window.height);
+
         logger.trace("Setting default close operation.");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        logger.trace("Adding window listener");
+
+        // Add a window listener for the closing operation
+        logger.debug("Adding window listener");
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -116,8 +122,10 @@ public class Display {
                 System.exit(0);
             }
         });
-        logger.debug("Making media player window visible.");
-        logger.trace("Creating media player component.");
+
+
+        // create the media player component and make the window visible
+        logger.debug("Creating media player component.");
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
             @Override
             public void keyPressed(KeyEvent event) {
@@ -129,21 +137,16 @@ public class Display {
         };
         mediaPlayerComponent.getMediaPlayer().setFullScreenStrategy(new DefaultAdaptiveRuntimeFullScreenStrategy(frame));
 
-        logger.trace("Adding media player component to window.");
+        logger.debug("Adding media player component to window.");
         frame.setContentPane(mediaPlayerComponent);
-        logger.trace("Calling set visible on the window.");
+
+        logger.info("Making media player window visible.");
         frame.setVisible(true);
 
         logger.info("Initialization finished.");
-        logger.info("Loading files to display...");
+        logger.info("Starting to show files now...");
 
-
-        displayFiles = loadDisplayFiles();
-
-        logger.info("Finished loading files.");
-        logger.info("Showing loaded files now...");
-
-        new showFiles().start(mediaPlayerComponent);
+        new showFiles().start(mediaPlayerComponent, loadDisplayFiles());
     }
 
     static liketechnik.InfoDisplay.DisplayFile[] loadDisplayFiles() {
@@ -154,18 +157,22 @@ public class Display {
 
         logger.setLevel(Level.INFO);
 
-        logger.debug("(Re)loading display files");
+        logger.debug("(Re)loading display files.");
 
+        // Check if the file containing the display file names exists
         if (Files.notExists(Config.Paths.DISPLAY_FILES_CONFIG_FILE)) {
             logger.error("Did not find config file for displayFiles.");
+            System.exit(5);
         }
 
+        // create builder to get all display files from the configuration file
         Parameters params = new Parameters();
         FileBasedConfigurationBuilder<FileBasedConfiguration> builder =
                 new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
                         .configure(params.properties()
                                 .setPath(Config.Paths.DISPLAY_FILES_CONFIG_FILE.toString()));
 
+        // get the configuration from the builder
         try {
             config = builder.getConfiguration();
         } catch (ConfigurationException e) {
@@ -173,39 +180,48 @@ public class Display {
             System.exit(3);
         }
 
+        // check if the configuration contains display file entries.
         if (!config.containsKey(Config.Keys.DISPLAY_FILES_KEY)) {
             logger.error("Config file does not contain any information about media.");
             System.exit(4);
         }
 
+        // load the names of all display files
         displayFilesToLoad = config.getStringArray(Config.Keys.DISPLAY_FILES_KEY);
 
-        Display.displayFiles = new liketechnik.InfoDisplay.DisplayFile[displayFilesToLoad.length];
+        DisplayFile[] displayFiles = new DisplayFile[displayFilesToLoad.length];
+
         for (String displayFile : displayFilesToLoad) {
+            // Check if configuration file for the display file exists
             if (Files.notExists(FileSystems.getDefault().getPath(Config.Paths.DISPLAY_FILES + "/" + displayFile + ".conf"))) {
                 logger.error("Did not find config file for displayFile {}.conf in directory {}.", displayFile,
                         Config.Paths.DISPLAY_FILES.toString());
+                continue;
             }
 
+            // create builder to get all properties for the display file
             FileBasedConfigurationBuilder<FileBasedConfiguration> displayFileBuilder  =
                     new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
                             .configure(params.properties()
                                     .setPath(Config.Paths.DISPLAY_FILES.toString() + "/" + displayFile + ".conf"));
 
+            // get the configuration from the builder
             try {
                 displayFileConfig = displayFileBuilder.getConfiguration();
             } catch (ConfigurationException e) {
                 logger.error("Error while getting configuration for displayFile {}. The error was: {}", displayFile, e);
-                System.exit(3);
+                continue;
             }
 
+            // check if all necessary information is present in the configuration for the display file
             if (!displayFileConfig.containsKey(Config.Keys.DISPLAY_FILE_DURATION_KEY) ||
                     !displayFileConfig.containsKey(Config.Keys.DISPLAY_FILE_TYPE_KEY)) {
                 logger.error("Config file for displayFile {} seems corrupted.", displayFile);
-                System.exit(4);
+                continue;
             }
 
-            Display.displayFiles[processedFiles] = new liketechnik.InfoDisplay.DisplayFile(
+            // create a new displayFile and add it to the array containing all display files
+            displayFiles[processedFiles] = new liketechnik.InfoDisplay.DisplayFile(
                     displayFileConfig.getInt(Config.Keys.DISPLAY_FILE_DURATION_KEY),
                         displayFileConfig.getString(Config.Keys.DISPLAY_FILE_TYPE_KEY),
                     Config.Paths.DISPLAY_FILES.toString() + "/" + displayFile);
@@ -213,11 +229,7 @@ public class Display {
             processedFiles++;
         }
 
-        //Display.displayFiles = new DisplayFile[2];
-        //Display.displayFiles[0] = new DisplayFile(10, DisplayFile.TYPE_IMAGE, "IMAGE.JPG");
-        //Display.displayFiles[1] = new DisplayFile(5, DisplayFile.TYPE_IMAGE, "IMAGE2.JPG");
-
-        return Display.displayFiles;
+        return displayFiles;
     }
 }
 
@@ -227,16 +239,23 @@ class showFiles extends Thread {
     final static ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(
             showFiles.class);
 
-    public void start(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
-        this.mediaPlayerComponent = mediaPlayerComponent;
-        logger.setLevel(Level.INFO);
+    DisplayFile[] displayFiles;
+
+    public void start(EmbeddedMediaPlayerComponent mediaPlayerComponent, DisplayFile[] displayFiles) {
+        this.mediaPlayerComponent  = mediaPlayerComponent;
+        this.displayFiles = displayFiles;
+
+        logger.setLevel(Level.DEBUG);
 
         super.start();
     }
 
+    /**
+     * Display all display files, reload them and start again...
+     */
     public void run() {
         while (true) {
-            for (DisplayFile displayFile : Display.displayFiles ) {
+            for (DisplayFile displayFile : this.displayFiles ) {
                 this.logger.debug("Adding media to window.");
 
                 String location = displayFile.getFileName();
@@ -252,14 +271,8 @@ class showFiles extends Thread {
                 }
             }
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                this.logger.error("Encountered interruption during sleep time of the thread. " +
-                        "Exception was: {}", e);
-            }
-
-            Display.displayFiles = Display.loadDisplayFiles();
+            // reload the display files
+            this.displayFiles = Display.loadDisplayFiles();
         }
     }
 }
