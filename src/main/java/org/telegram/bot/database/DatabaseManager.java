@@ -789,6 +789,6 @@ public class DatabaseManager {
      */
     public String getBotToken() throws Exception {
         setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
-        return currentConfiguration.getString(Config.Keys.BOT_USERNAME_KEY);
+        return currentConfiguration.getString(Config.Keys.BOT_TOKEN_KEY);
     }
 }
