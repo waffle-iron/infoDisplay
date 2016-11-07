@@ -83,7 +83,7 @@ public class WriteQuestion extends BotCommand {
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.append("Deine Frage wurde weitergeleitet.");
 
-            question.setChatId(org.telegram.bot.Config.Bot.ADMIN_CHAT_ID.toString());
+            question.setChatId(DatabaseManager.getInstance().getAdminChatId().toString());
             question.setText(questionBuilder.toString());
             answer.setChatId(chat.getId().toString());
             answer.setText(messageBuilder.toString());

@@ -90,7 +90,7 @@ public class SendPicture extends BotCommand {
                 File file = absSender.getFile(getFileRequest);
                 URL fileUrl = new URL(
                         "https://api.telegram.org/file/bot" +
-                                Config.Bot.DISPLAY_TOKEN + "/" + file.getFilePath());
+                                DatabaseManager.getInstance().getBotToken() + "/" + file.getFilePath());
                 Path image = FileSystems.getDefault().getPath(Config.Paths.DISPLAY_FILES + "/" + displayFileName);
 
                 FileUtils.copyURLToFile(fileUrl, image.toFile(), 10000, 10000);

@@ -100,7 +100,7 @@ public class RegisterCommand extends BotCommand {
                     requestBuilder.append(" möchte sich registrieren lassen. Seine userID ist: ").append(user.getId());
 
                     SendMessage request = new SendMessage();
-                    request.setChatId(Config.Bot.ADMIN_CHAT_ID.toString());
+                    request.setChatId(databaseManager.getAdminChatId().toString());
                     request.setText(requestBuilder.toString());
 
                     try {
