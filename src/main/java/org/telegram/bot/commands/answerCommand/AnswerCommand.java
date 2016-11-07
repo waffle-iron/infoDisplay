@@ -74,11 +74,11 @@ public class AnswerCommand extends BotCommand {
         SendMessage answer = new SendMessage();
 
         try {
-            if (!user.getId().equals(Config.Bot.ADMIN_USER_ID)) {
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
+
+            if (!user.getId().equals(databaseManager.getAdminUserId())) {
                 return;
             }
-
-            DatabaseManager databaseManager = DatabaseManager.getInstance();
 
             messageBuilder.append("Folgende Nachrichten sind zu beantworten: ").append("\n");
 
