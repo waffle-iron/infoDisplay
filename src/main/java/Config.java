@@ -54,11 +54,11 @@ public final class Config {
     }
 
     public static final class Bot {
-        public static final String DISPLAY_USER = <BOT_NAME>;
-        public static final String DISPLAY_TOKEN = <BOT_TOKEN>;
+        public static final String DISPLAY_USER = "";
+        public static final String DISPLAY_TOKEN = "";
 
-        public static final Integer ADMIN_CHAT_ID = <CHAT_ID>;
-        public static final Integer ADMIN_USER_ID = <USER_ID>;
+        public static final Integer ADMIN_CHAT_ID = 0;
+        public static final Integer ADMIN_USER_ID = 0;
 
         public static final String DISPLAY_FILE_TYPE_IMAGE = "image";
         public static final String HAS_PHOTO = "hasPhoto";

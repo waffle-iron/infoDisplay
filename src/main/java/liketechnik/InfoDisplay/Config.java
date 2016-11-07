@@ -32,11 +32,6 @@ import java.nio.file.Path;
  * @author liketechnik
  * @version 1.0.1
  * @date 22 of October of 2016
- *
- * This is just a storage for all values that stay the same.
- * It saves the keys for the values in configuration files, strings that are checked against in if
- * clauses and therefore need to be exactly the same. Another thing is that things like paths that need to
- * be easily find.
  */
 public final class Config {
     public static final class Keys {
@@ -59,11 +54,11 @@ public final class Config {
     }
 
     public static final class Bot {
-        public static final String DISPLAY_USER = "displaybot";
-        public static final String DISPLAY_TOKEN = "292304229:AAE_JG4HhoJnYIbpfxwglf_oIU5V814gqmo";
+        public static final String DISPLAY_USER = "";
+        public static final String DISPLAY_TOKEN = "";
 
-        public static final Integer ADMIN_CHAT_ID = 195494451;
-        public static final Integer ADMIN_USER_ID = 195494451;
+        public static final Integer ADMIN_CHAT_ID = 0;
+        public static final Integer ADMIN_USER_ID = 0;
 
         public static final String DISPLAY_FILE_TYPE_IMAGE = "image";
         public static final String HAS_PHOTO = "hasPhoto";
