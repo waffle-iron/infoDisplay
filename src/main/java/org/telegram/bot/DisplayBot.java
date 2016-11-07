@@ -145,8 +145,8 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
                     } else if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
                             .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_TITLE)) {
 
-                       new SendTitle().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
-                               new String[]{update.getMessage().getText()});
+                        new SendTitle().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
+                                new String[]{update.getMessage().getText()});
 
                     } else if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
                             .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_DESCRIPTION)) {
@@ -162,31 +162,47 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
 
                     }
                 } else if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
-                                    .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE)) {
+                        .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE)) {
 
-                        if (update.getMessage().getPhoto() != null) {
+                    if (update.getMessage().getPhoto() != null) {
 
-                            List<PhotoSize> photos = update.getMessage().getPhoto();
+                        List<PhotoSize> photos = update.getMessage().getPhoto();
 
-                            int width = 0;
-                            int height = 0;
+                        int width = 0;
+                        int height = 0;
 
-                            int biggestPhoto = 0;
+                        int biggestPhoto = 0;
 
 
-                            for (int x = 0; x < photos.size(); x++) {
-                                if (width < photos.get(x).getWidth() || height < photos.get(x).getHeight()) {
-                                    biggestPhoto = x;
-                                }
+                        for (int x = 0; x < photos.size(); x++) {
+                            if (width < photos.get(x).getWidth() || height < photos.get(x).getHeight()) {
+                                biggestPhoto = x;
                             }
+                        }
+
+                        new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
+                                new String[]{Config.Bot.HAS_PHOTO, photos.get(biggestPhoto).getFileId()});
+                    } else if (update.getMessage().getDocument() != null &&
+                            (update.getMessage().getDocument().getMimeType().equals("image/jpeg") ||
+                                    update.getMessage().equals("image/png"))) {
+
+                        if (update.getMessage().getDocument() != null &&
+                                (update.getMessage().getDocument().getMimeType().equals("image/jpeg") ||
+                                        update.getMessage().equals("image/png"))) {
 
                             new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
-                                    new String[]{Config.Bot.HAS_PHOTO, photos.get(biggestPhoto).getFileId()});
+                                    new String[]{Config.Bot.HAS_PHOTO,
+                                            update.getMessage().getDocument().getFileId().toString()});
                         } else {
                             new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
                                     new String[]{Config.Bot.HAS_NO_PHOTO});
                         }
+
+                    } else {
+                        new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
+                                new String[]{Config.Bot.HAS_NO_PHOTO});
                     }
+                }
             }
         } catch (Exception e) {
             BotLogger.error("PROCESSNONCOMMANDUPDATE", e);
