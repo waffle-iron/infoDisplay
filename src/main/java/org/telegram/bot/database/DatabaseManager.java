@@ -771,4 +771,24 @@ public class DatabaseManager {
         setCurrentConfiguration(userID);
         return  currentConfiguration.getString(Config.Keys.CURRENT_PICTURE_TITLE);
     }
+
+    /**
+     * Reads the name for the bot from the configuration file
+     * @return the username for the bot
+     * @throws Exception
+     */
+    public String getBotUsername() throws Exception {
+        setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
+        return currentConfiguration.getString(Config.Keys.BOT_USERNAME_KEY);
+    }
+
+    /**
+     * Reads the token of the bot from the configuration file
+     * @return the token for the bot
+     * @throws Exception
+     */
+    public String getBotToken() throws Exception {
+        setCurrentConfiguration(Config.Paths.BOT_CONFIG_FILE);
+        return currentConfiguration.getString(Config.Keys.BOT_USERNAME_KEY);
+    }
 }
