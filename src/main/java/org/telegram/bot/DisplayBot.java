@@ -187,6 +187,21 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
                                     new String[]{Config.Bot.HAS_NO_PHOTO});
                         }
                     }
+                    else if (databaseManager.getUserCommandState(update.getMessage().getFrom().getId())
+                            .equals(Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE)) {
+
+                        if (update.getMessage().getDocument() != null &&
+                                (update.getMessage().getDocument().getMimeType().equals("image/jpeg") ||
+                                        update.getMessage().equals("image/png"))) {
+
+                            new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
+                                    new String[]{Config.Bot.HAS_PHOTO,
+                                            update.getMessage().getDocument().getFileId().toString()});
+                        } else  {
+                            new SendPicture().execute(this, update.getMessage().getFrom(), update.getMessage().getChat(),
+                                    new String[]{Config.Bot.HAS_NO_PHOTO});
+                        }
+                }
             }
         } catch (Exception e) {
             BotLogger.error("PROCESSNONCOMMANDUPDATE", e);
