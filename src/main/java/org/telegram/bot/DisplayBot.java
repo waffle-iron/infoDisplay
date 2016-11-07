@@ -200,7 +200,13 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
      */
     @Override
     public String getBotUsername() {
-        return Config.Bot.DISPLAY_USER;
+        try {
+            return DatabaseManager.getInstance().getBotUsername();
+        } catch (Exception e) {
+            BotLogger.error(this.LOGTAG, "Error getting bot's username.", e);
+            System.exit(1);
+        }
+        return null;
     }
 
     /**
@@ -210,6 +216,11 @@ public class DisplayBot extends TelegramLongPollingCommandBot {
      */
     @Override
     public String getBotToken() {
-        return Config.Bot.DISPLAY_TOKEN;
+        try {
+            return DatabaseManager.getInstance().getBotToken();
+        } catch (Exception e) {
+            BotLogger.error(this.LOGTAG, "Error getting bot's token.", e);
+        }
+        return null;
     }
 }
