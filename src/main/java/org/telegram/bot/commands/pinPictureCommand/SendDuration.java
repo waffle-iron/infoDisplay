@@ -101,7 +101,7 @@ public class SendDuration extends BotCommand {
 
             messageBuilder.append("Sende mir nun bitte das Bild.");
 
-            databaseManager.setDisplayFileDuration(displayFileName, duration);
+            databaseManager.setCurrentPictureDuration(user.getId(), duration);
             databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE);
 
             answer.setText(messageBuilder.toString());

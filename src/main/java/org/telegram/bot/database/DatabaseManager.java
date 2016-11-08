@@ -30,12 +30,16 @@ import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.configuration2.interpol.InterpolatorSpecification;
+import org.apache.commons.io.FileUtils;
 import org.telegram.bot.Config;
+import org.telegram.telegrambots.api.methods.GetFile;
+import org.telegram.telegrambots.api.objects.File;
+import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.logging.BotLogger;
 
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -625,7 +629,7 @@ public class DatabaseManager {
      * Set's the description of a {@link org.telegram.bot.DisplayFile DisplayFile}.
      * @param displayFileName The name of the displayFile to set the description.
      * @param description The description text.
-     * @see #createDisplayFile(String displayFileName) Create a new displayFile.
+     * @see #addDisplayFile(String displayFileName) Create a new displayFile.
      * @see #setDisplayFileDuration(String displayFileName, int duration) Save the duration for a displayFile.
      * @see #setDisplayFileType(String displayFileName, String type) Save the type of a displayFile.
      */
@@ -646,7 +650,7 @@ public class DatabaseManager {
      * Set's the display duration of a {@link org.telegram.bot.DisplayFile DisplayFile}.
      * @param displayFileName The name of the displayFile to set the duration.
      * @param duration The duration in seconds.
-     * @see #createDisplayFile(String displayFileName) Create a new displayFile.
+     * @see #addDisplayFile(String displayFileName) Create a new displayFile.
      * @see #setDisplayFileDescription(String displayFileName, String description) Set the description of a displayFile.
      * @see #setDisplayFileType(String displayFileName, String type) Save the type of a displayFile.
      */
@@ -668,7 +672,7 @@ public class DatabaseManager {
      * @param type The type of the displayFile. Can be one of the 'DISPLAY_FILE_TYPE_*' Strings in
      * {@link org.telegram.bot.Config.Bot Config.Bot}.
      * @see org.telegram.bot.Config.Bot#DISPLAY_FILE_TYPE_IMAGE
-     * @see #createDisplayFile(String displayFileName) Create a new displayFile.
+     * @see #addDisplayFile(String displayFileName) Create a new displayFile.
      * @see #setDisplayFileDuration(String displayFileName, int duration) Save the duration for a displayFile.
      * @see #setDisplayFileDescription(String displayFileName, String description) Set the description of a displayFile.
      */
@@ -689,14 +693,13 @@ public class DatabaseManager {
     }
 
     /**
-     * Creates a new displayFile configuration file.
-     * After creating a new file, all set methods of DisplayFiles should be called.
-     * @param displayFileName The name of the displayFile to be created.
+     * Adds a new displayFile to the configuration file.
+     * @param displayFileName The name of the displayFile to be added.
      * @see #setDisplayFileDuration(String displayFileName, int duration) Save the duration for a displayFile.
      * @see #setDisplayFileDescription(String displayFileName, String description) Set the description of a displayFile.
      * @see #setDisplayFileType(String displayFileName, String type) Save the type of a displayFile.
      */
-    public void createDisplayFile(String displayFileName) throws Exception {
+    public void addDisplayFile(String displayFileName) throws Exception {
 
         List<String> displayFiles = getDisplayFiles();
         displayFiles.add(displayFileName);
@@ -751,6 +754,10 @@ public class DatabaseManager {
      * @see #getCurrentPictureTitle(Integer userID) Read the currentPictureTitle.
      */
     public void setCurrentPictureTitle(Integer userID, String title) throws Exception {
+        if (Files.exists(this.getDatabaseDisplayFilePath(title))) {
+            throw new FileAlreadyExistsException("There already is one file with this name.");
+        }
+
         setCurrentConfiguration(userID);
         try {
             currentConfiguration.setProperty(Config.Keys.CURRENT_PICTURE_TITLE, title);
@@ -822,6 +829,38 @@ public class DatabaseManager {
     public int getCurrentPictureDuration(Integer userId) throws Exception {
         setCurrentConfiguration(userId);
         return currentConfiguration.getInt(Config.Keys.CURRENT_PICTURE_DURATION, 0);
+    }
+
+    /**
+     * Download the file to display and add it together with its properties to the configuration files.
+     * @param absSender
+     * @param userId
+     * @param fileId
+     * @param type
+     */
+    public void createNewDisplayFile(AbsSender absSender, Integer userId, String fileId, String type) throws Exception {
+        if (type.equals(Config.Bot.DISPLAY_FILE_TYPE_IMAGE)) {
+            String pictureTitle = this.getCurrentPictureTitle(userId);
+
+            GetFile getFileRequest = new GetFile();
+            getFileRequest.setFileId(fileId);
+
+            File file = absSender.getFile(getFileRequest);
+            URL fileUrl = new URL(
+                    "https://api.telegram.org/file/bot" +
+                            DatabaseManager.getInstance().getBotToken() + "/" + file.getFilePath());
+            Path image = FileSystems.getDefault().getPath(Config.Paths.DISPLAY_FILES + "/" + pictureTitle);
+
+            FileUtils.copyURLToFile(fileUrl, image.toFile());
+
+            this.createConfigurationFile(this.getDatabaseDisplayFilePath(pictureTitle));
+            this.setDisplayFileType(pictureTitle, Config.Bot.DISPLAY_FILE_TYPE_IMAGE);
+            this.setDisplayFileDescription(pictureTitle, this.getCurrentPictureDescription(userId));
+            this.setDisplayFileDuration(pictureTitle, this.getCurrentPictureDuration(userId));
+            this.addDisplayFile(pictureTitle);
+        } else {
+            throw new IllegalArgumentException("No known type.");
+        }
     }
 
     /**

@@ -75,9 +75,8 @@ public class SendDescription extends BotCommand {
             StringBuilder messageBuilder = new StringBuilder();
 
             String message = arguments[0];
-            String displayFileName = databaseManager.getCurrentPictureTitle(user.getId());
 
-            databaseManager.setDisplayFileDescription(displayFileName, message);
+            databaseManager.setCurrentPictureDescription(user.getId(), message);
 
             messageBuilder.append("Sende mir nun die Anzeigedauer des Bildes.");
 
