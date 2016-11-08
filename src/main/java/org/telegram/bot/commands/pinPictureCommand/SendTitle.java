@@ -90,7 +90,6 @@ public class SendTitle extends BotCommand {
             messageBuilder.append("Sende mir nun bitte eine (kurze) Beschreibung / Überschrift für das Bild.");
 
             try {
-                databaseManager.createConfigurationFile(databaseManager.getDatabaseDisplayFilePath(displayFileName));
                 databaseManager.setCurrentPictureTitle(user.getId(), displayFileName);
                 databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_DESCRIPTION);
             } catch (FileAlreadyExistsException e) {
