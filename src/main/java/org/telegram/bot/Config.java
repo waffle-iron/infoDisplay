@@ -59,6 +59,7 @@ public final class Config {
 
         public static final String SELECTED_QUESTION = "selectedQuestion";
         public static final String CURRENT_PICTURE_TITLE = "currentPictureTitle";
+        public static final String CURRENT_PICTURE_DESCRIPTION = "currentPictureDescription";
 
         public static final String BOT_USERNAME_KEY = "botUsername";
         public static final String BOT_TOKEN_KEY = "botToken";

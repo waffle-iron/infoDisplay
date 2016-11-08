@@ -773,6 +773,32 @@ public class DatabaseManager {
     }
 
     /**
+     * Saves currentPictureDescription in the configuration file of a user.
+     * @param userId User for who the value is saved.
+     * @param description The description to be changed.
+     * @see #getCurrentPictureDescription(Integer userId) Read the currentPictureDescription.
+     */
+    public void setCurrentPictureDescription(Integer userId, String description) throws Exception {
+        setCurrentConfiguration(userId);
+        try {
+            currentConfiguration.setProperty(Config.Keys.CURRENT_PICTURE_DESCRIPTION, description);
+        } catch (NullPointerException e) {
+            currentConfiguration.addProperty(Config.Keys.CURRENT_PICTURE_DESCRIPTION, description);
+        }
+    }
+
+    /**
+     * Reads currentPictureDescription from the configuration file of a user.
+     * @param userId User of who the value is read.
+     * @return The currentPictureDescription for the specified user.
+     * @see #setCurrentPictureDescription(Integer userId, String description) Save the currentPictureDescription.
+     */
+    public String getCurrentPictureDescription(Integer userId) throws Exception {
+        setCurrentConfiguration(userId);
+        return currentConfiguration.getString(Config.Keys.CURRENT_PICTURE_DESCRIPTION);
+    }
+
+    /**
      * Reads the name for the bot from the configuration file
      * @return the username for the bot
      * @throws Exception
