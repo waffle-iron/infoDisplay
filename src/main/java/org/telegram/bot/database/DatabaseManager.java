@@ -792,6 +792,8 @@ public class DatabaseManager {
         } catch (NullPointerException e) {
             currentConfiguration.addProperty(Config.Keys.CURRENT_PICTURE_DESCRIPTION, description);
         }
+
+        currentBuilder.save();
     }
 
     /**
@@ -818,6 +820,8 @@ public class DatabaseManager {
         } catch (NullPointerException e) {
             currentConfiguration.addProperty(Config.Keys.CURRENT_PICTURE_DURATION, duration);
         }
+
+        currentBuilder.save();
     }
 
     /**
