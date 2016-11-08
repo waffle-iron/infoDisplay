@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016  liketechnik <flowa2000@gmail.com>
+ * Copyright (C) 2016  Florian Warzecha <flowa2000@gmail.com>
  *
  * This file is part of infoDisplay.
  *
@@ -44,7 +44,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 /**
- * @author liketechnik
+ * @author Florian Warzecha
  * @version 1.0.1
  * @date 01 of November 2016
  *
