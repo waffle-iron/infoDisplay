@@ -799,6 +799,32 @@ public class DatabaseManager {
     }
 
     /**
+     * Saves currentPictureDuration in the configuration file of a user.
+     * @param userId User for who the value is saved.
+     * @param duration The new value for the duration.
+     * @see #getCurrentPictureDuration(Integer userId) Read the currentPictureDuration.
+     */
+    public void setCurrentPictureDuration(Integer userId, int duration) throws Exception {
+        setCurrentConfiguration(userId);
+        try {
+            currentConfiguration.setProperty(Config.Keys.CURRENT_PICTURE_DURATION, duration);
+        } catch (NullPointerException e) {
+            currentConfiguration.addProperty(Config.Keys.CURRENT_PICTURE_DURATION, duration);
+        }
+    }
+
+    /**
+     * Reads currentPictureDuration from the configuration file of a user.
+     * @param userId User of who the value is read.
+     * @return The currentPictureDuration for the specified user.
+     * @see #setCurrentPictureDuration(Integer userId, int duration) Save the currentPictureDuration.
+     */
+    public int getCurrentPictureDuration(Integer userId) throws Exception {
+        setCurrentConfiguration(userId);
+        return currentConfiguration.getInt(Config.Keys.CURRENT_PICTURE_DURATION, 0);
+    }
+
+    /**
      * Reads the name for the bot from the configuration file
      * @return the username for the bot
      * @throws Exception
