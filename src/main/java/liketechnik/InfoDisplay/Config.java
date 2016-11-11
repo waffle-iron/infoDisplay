@@ -57,8 +57,9 @@ public final class Config {
         public static final String USER_ACTIVE = "userActive";
         public static final String USER_REGISTERED = "userRegistered";
         public static final String USER_WANTS_REGISTRATION = "userWantsregistration";
-
         public static final String USER_COMMAND_STATE = "userState";
+        public static final String USER_LANGUAGE = "userLanguage";
+
         public final static String QUESTION = "question";
 
         public static final String CHAT_ID = "chatID";
@@ -113,5 +114,10 @@ public final class Config {
         public static final Path QUESTION_DATABASE = FileSystems.getDefault().getPath(BOT_DATABASE + "/questions");
 
         public static final Path BOT_CONFIG_FILE = FileSystems.getDefault().getPath(APP_HOME + "/bot.conf");
+    }
+
+    public static final class Languages {
+        public static final String ENGLISH = "en";
+        public static final String GERMAN = "ger";
     }
 }
