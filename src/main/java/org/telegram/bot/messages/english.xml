@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE language SYSTEM "language.dtd">
+<language>
+    <lang_name>en</lang_name>
+    <command_messages>
+        <command>start_command</command>
+        <part>
+            <position>1</position>
+            <message>Hello </message>
+        </part>
+        <part>
+            <position>2</position>
+            <message>,\nif you know this bot, you probably already know how to use it, although you can use the '/help'
+                command. If not, then it will not be useful for you. If you have a question concerning
+                this bot, feel free to ask it via '/ask'.\n\nYou can set the language via the '/language' command."
+                ;</message>
+        </part>
+    </command_messages>
+</language>
