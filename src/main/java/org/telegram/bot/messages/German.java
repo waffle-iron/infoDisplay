@@ -37,9 +37,11 @@ package org.telegram.bot.messages;
  * @date 10 of November of 2016
  */
 public class German {
+    public static final String SET_LANGUAGE_PREFERENCE = "Bitte stelle Deine Frage mit dem '/language' Befehl.";
+
     public static final String START_COMMAND_1 = "Hallo ";
-    public static final String START_COMMAND_2 = ",\nwenn du diesen Bot kennst, weißt du wahrscheinlich schon wie er " +
-            "zu bedienen ist, ansonsten benutze den '/help' Befehl. Wenn du diesen Bot noch nicht kennst, wirst " +
-            "wahrscheinlich nichts mit ihm Anfangen können. Wenn du eine Frage zu diesem Bot hast, stelle " +
+    public static final String START_COMMAND_2 = ",\nwenn Du diesen Bot kennst, weißt Du wahrscheinlich schon wie er " +
+            "zu bedienen ist, ansonsten benutze den '/help' Befehl. Wenn Du diesen Bot noch nicht kennst, wirst Du" +
+            "wahrscheinlich nichts mit ihm Anfangen können. Wenn Du eine Frage zu diesem Bot hast, stelle " +
             "sie mit '/ask'.";
 }

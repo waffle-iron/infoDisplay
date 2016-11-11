@@ -213,6 +213,9 @@ public class DatabaseManager {
      */
     public String getUserLanguage(Integer userId) throws Exception {
         setCurrentConfiguration(userId);
+        if (currentConfiguration.getString(Config.Keys.USER_LANGUAGE).equals(Config.Languages.NONE)) {
+            throw new Exception("No language preference set for this user.");
+        }
         return currentConfiguration.getString(Config.Keys.USER_LANGUAGE);
     }
 

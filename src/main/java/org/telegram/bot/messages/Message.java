@@ -31,7 +31,13 @@
 
 package org.telegram.bot.messages;
 
+import org.telegram.bot.Config;
+import org.telegram.bot.Main;
+import org.telegram.bot.database.DatabaseManager;
 import org.telegram.telegrambots.api.objects.User;
+import org.telegram.telegrambots.logging.BotLogger;
+
+import static org.telegram.bot.Main.getFilteredUsername;
 
 /**
  * @author Florian Warzecha
@@ -42,9 +48,41 @@ import org.telegram.telegrambots.api.objects.User;
  */
 public class Message {
 
+    public static final String LOGTAG = "MESSAGE";
+
     public String getStartMessage(User user) {
         StringBuilder startMessage = new StringBuilder();
 
-        return startMessage.toString();
+        try {
+            if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.ENGLISH)) {
+                startMessage.append(English.START_COMMAND_1);
+            } else if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.GERMAN)) {
+                startMessage.append(German.START_COMMAND_1);
+            }
+
+            return startMessage.toString();
+        } catch (Exception e) {
+            BotLogger.error(LOGTAG, e);
+
+            startMessage.append(English.START_COMMAND_1);
+            startMessage.append(getFilteredUsername(user));
+            startMessage.append(English.START_COMMAND_2);
+
+            startMessage.append(German.START_COMMAND_1);
+            startMessage.append(getFilteredUsername(user));
+            startMessage.append(German.START_COMMAND_2);
+            try {
+                if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.NONE)) {
+                    startMessage.append("\n\n");
+                    startMessage.append(English.SET_LANGUAGE_PREFERENCE);
+                    startMessage.append("\n");
+                    startMessage.append(German.SET_LANGUAGE_PREFERENCE);
+                }
+            } catch (Exception e1) {
+                BotLogger.error(LOGTAG, e);
+            }
+
+            return startMessage.toString();
+        }
     }
 }

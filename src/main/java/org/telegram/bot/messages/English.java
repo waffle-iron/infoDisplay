@@ -37,6 +37,9 @@ package org.telegram.bot.messages;
  * @date 10 of November of 2016
  */
 public class English {
+    public final static String SET_LANGUAGE_PREFERENCE = "Please set your language reference with the '/language' " +
+            "command.";
+
     public final static String START_COMMAND_1 = "Hello ";
     public final static String START_COMMAND_2 = ",\nif you know this bot, you probably already know how to use it, " +
             "although you can use the '/help' command. If not, then it will not be usefull for you. If you have a " +

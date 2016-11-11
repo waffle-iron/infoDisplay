@@ -119,5 +119,7 @@ public final class Config {
     public static final class Languages {
         public static final String ENGLISH = "en";
         public static final String GERMAN = "ger";
+
+        public static final String NONE = "none";
     }
 }
