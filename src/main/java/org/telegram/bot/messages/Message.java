@@ -31,11 +31,25 @@
 
 package org.telegram.bot.messages;
 
-import org.telegram.bot.Config;
-import org.telegram.bot.Main;
+import liketechnik.InfoDisplay.Config;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.builder.fluent.XMLBuilderParameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.resolver.CatalogResolver;
+import org.apache.commons.configuration2.resolver.DefaultEntityResolver;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.telegram.bot.database.DatabaseManager;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.logging.BotLogger;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.SAXException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 import static org.telegram.bot.Main.getFilteredUsername;
 
@@ -50,39 +64,45 @@ public class Message {
 
     public static final String LOGTAG = "MESSAGE";
 
+    public static final Path location = FileSystems.getDefault().getPath(
+            Message.class.getResource(Message.class.getSimpleName() + ".class").toString());
+    public static final Path dtd = FileSystems.getDefault().getPath(location.getParent() + "/language.xsd");
+
     public String getStartMessage(User user) {
         StringBuilder startMessage = new StringBuilder();
 
-        try {
-            if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.ENGLISH)) {
-                startMessage.append(English.START_COMMAND_1);
-            } else if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.GERMAN)) {
-                startMessage.append(German.START_COMMAND_1);
-            }
+        FileBasedConfigurationBuilder<XMLConfiguration> builder;
+        XMLConfiguration config = null;
 
-            return startMessage.toString();
+        XMLBuilderParameters params = new Parameters().xml();
+        params.setBasePath(location.toString());
+        params.setSchemaValidation(true);
+        params.setExpressionEngine(new XPathExpressionEngine());
+
+        try {
+            builder =
+                    new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                    .configure(params.setFileName(location.getParent().toString() + "/" +
+                            DatabaseManager.getInstance().getUserLanguage(user.getId()) + ".xml"));
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
-
-            startMessage.append(English.START_COMMAND_1);
-            startMessage.append(getFilteredUsername(user));
-            startMessage.append(English.START_COMMAND_2);
-
-            startMessage.append(German.START_COMMAND_1);
-            startMessage.append(getFilteredUsername(user));
-            startMessage.append(German.START_COMMAND_2);
-            try {
-                if (DatabaseManager.getInstance().getUserLanguage(user.getId()).equals(Config.Languages.NONE)) {
-                    startMessage.append("\n\n");
-                    startMessage.append(English.SET_LANGUAGE_PREFERENCE);
-                    startMessage.append("\n");
-                    startMessage.append(German.SET_LANGUAGE_PREFERENCE);
-                }
-            } catch (Exception e1) {
-                BotLogger.error(LOGTAG, e);
-            }
-
-            return startMessage.toString();
+            builder =
+                    new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                            .configure(params.setFileName(location.getParent().toString() + "/english.xml"));
         }
+
+        try {
+            config = builder.getConfiguration();
+        } catch (ConfigurationException e) {
+            BotLogger.error(LOGTAG, e);
+            System.exit(2);
+        }
+
+        startMessage.append(config.getString("command_message[@command='start_command']/part[@position='a']"));
+        startMessage.append(" ");
+        startMessage.append(getFilteredUsername(user));
+        startMessage.append(config.getString("command_message[@command='start_command']/part[@position='b']"));
+
+        return startMessage.toString();
     }
 }

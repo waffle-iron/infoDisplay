@@ -31,16 +31,8 @@
 
 //packageStatement*
 
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static com.sun.org.apache.xml.internal.security.utils.Constants.configurationFile;
 
 /**
  * @author Florian Warzecha
@@ -117,8 +109,8 @@ public final class Config {
     }
 
     public static final class Languages {
-        public static final String ENGLISH = "en";
-        public static final String GERMAN = "ger";
+        public static final String ENGLISH = "english";
+        public static final String GERMAN = "german";
 
         public static final String NONE = "none";
     }
