@@ -40,7 +40,7 @@
     <xs:element name="part">
         <xs:complexType mixed="true">
             <xs:simpleContent>
-                <xs:extension base="xs:string">
+                <xs:extension base="xs:token">
                     <xs:attribute ref="position" use="required"/>
                 </xs:extension>
             </xs:simpleContent>
