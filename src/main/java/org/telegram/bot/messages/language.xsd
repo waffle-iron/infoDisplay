@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2016  Florian Warzecha <flowa2000@gmail.com>
   ~
@@ -29,14 +29,39 @@
   ~ Thanks to all the people who contributed to the projects that make this
   ~ program possible.
   -->
-<!--<!ENTITY % languages -->
 
-<!ELEMENT lang_name (#PCDATA)>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<!ELEMENT command (#PCDATA)>
+    <xs:element name="name"  type="xs:language"/>
 
-<!ELEMENT language (lang_name,(command_messages)+)>
-    <!ELEMENT command_messages (command,(part)+)>
-        <!ELEMENT part (position,message)>
-            <!ELEMENT position (#PCDATA)>
-            <!ELEMENT message (#PCDATA)>
+    <xs:attribute name="command" type="xs:string"/>
+    <xs:attribute name="position" type="xs:ID"/>
+
+    <xs:element name="part">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute ref="position" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="command_message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="part" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="command" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="language">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="command_message" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
