@@ -31,13 +31,22 @@
   ~ program possible.
   -->
 
+<!-- Please use '/n>' to produce a newline character in output-->
+
 <language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="language.xsd">
     <name>en</name>
     <command_message command="start_command">
-        <part position="a">Hello </part>
-        <part position="b">,\nif you know this bot, you probably already know how to use it, although you can use the
-                '/help'
-            command. If not, then it will not be useful for you. If you have a question concerning this bot,
-            feel free to ask it via '/ask'.\n\nYou can set the language via the '/language' command.</part>
+        <case case="userUnknown">
+            <part position="1">Hello</part>
+            <part position="2">,/n>if you know this bot, you probably already know how to use it, although you can use
+                the '/help' command. If not, it probably will not be useful for you. If you have a question concerning
+                this bot, feel free to ask it via '/ask'.
+            </part>
+        </case>
+        <case case="userKnown">
+            <part position="1">Hello</part>
+            <part position="2">,/n>nice to see you again. I hope you still know all the commands, if not
+            the '/help' command will always be you guide.</part>
+        </case>
     </command_message>
 </language>

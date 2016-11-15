@@ -50,6 +50,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 import static org.telegram.bot.Main.getFilteredUsername;
 
@@ -68,10 +72,13 @@ public class Message {
             Message.class.getResource(Message.class.getSimpleName() + ".class").toString());
     public static final Path dtd = FileSystems.getDefault().getPath(location.getParent() + "/language.xsd");
 
-    public String getStartMessage(User user) {
+    public static StringBuilder getStartMessage(User user, boolean userKnown) {
+
+        final String startMessageQuarry = "command_message[@command='start_command']/";
+
         StringBuilder startMessage = new StringBuilder();
 
-        FileBasedConfigurationBuilder<XMLConfiguration> builder;
+        FileBasedConfigurationBuilder<XMLConfiguration> builder = null;
         XMLConfiguration config = null;
 
         XMLBuilderParameters params = new Parameters().xml();
@@ -86,9 +93,11 @@ public class Message {
                             DatabaseManager.getInstance().getUserLanguage(user.getId()) + ".xml"));
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
-            builder =
-                    new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
-                            .configure(params.setFileName(location.getParent().toString() + "/english.xml"));
+            if (e.getClass() == IllegalArgumentException.class) {
+                builder =
+                        new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                                .configure(params.setFileName(location.getParent().toString() + "/english.xml"));
+            }
         }
 
         try {
@@ -98,11 +107,23 @@ public class Message {
             System.exit(2);
         }
 
-        startMessage.append(config.getString("command_message[@command='start_command']/part[@position='a']"));
-        startMessage.append(" ");
-        startMessage.append(getFilteredUsername(user));
-        startMessage.append(config.getString("command_message[@command='start_command']/part[@position='b']"));
 
-        return startMessage.toString();
+         if (userKnown) {
+             startMessage.append(config.getString(startMessageQuarry + "case[@case='userKnown']/part[@position=1]")
+                     .replaceAll("/n>", "\n"));
+             startMessage.append(" ");
+             startMessage.append(getFilteredUsername(user));
+             startMessage.append(config.getString(startMessageQuarry + "case[@case='userKnown']/part[@position=2]")
+                     .replaceAll("/n>", "\n"));
+        } else {
+             startMessage.append(config.getString(startMessageQuarry + "case[@case='userUnknown']/part[@position=1]")
+                     .replaceAll("/n>", "\n"));
+             startMessage.append(" ");
+             startMessage.append(getFilteredUsername(user));
+             startMessage.append(config.getString(startMessageQuarry + "case[@case='userUnknown']/part[@position=2]")
+                     .replaceAll("/n>", "\n"));
+        }
+
+        return startMessage;
     }
 }

@@ -34,8 +34,10 @@
 
     <xs:element name="name"  type="xs:language"/>
 
-    <xs:attribute name="command" type="xs:string"/>
-    <xs:attribute name="position" type="xs:ID"/>
+    <xs:attribute name="command" type="xs:ID"/>
+    <xs:attribute name="position" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="case" type="xs:ID"/>
+
 
     <xs:element name="part">
         <xs:complexType mixed="true">
@@ -47,10 +49,20 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="command_message">
+    <xs:element name="case">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="part" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="case" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="command_message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="part" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="case" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute ref="command" use="required"/>
         </xs:complexType>
