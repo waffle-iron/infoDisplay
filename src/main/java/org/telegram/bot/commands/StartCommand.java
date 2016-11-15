@@ -35,6 +35,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot.*;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -83,8 +84,6 @@ public class StartCommand extends BotCommand {
         try {
             DatabaseManager databaseManager = DatabaseManager.getInstance();
 
-            String userName = getFilteredUsername(user);
-
             boolean userKnown = false;
 
             if (databaseManager.getUserState(user.getId())) {
@@ -94,33 +93,22 @@ public class StartCommand extends BotCommand {
             }
 
             if (userKnown) {
-                messageBuilder.append("Hello ").append(userName).append(",\n");
-                messageBuilder.append("I think you know how to use this bot, as you already know it.").append("\n\n");
-                messageBuilder.append("Hallo ").append(userName).append(",\n");
-                messageBuilder.append("ich denke Du weißt wie du den Bot benutzen kannst, da du ihn schon kennst.");
+                messageBuilder = Message.getStartMessage(user, true);
             } else {
                 databaseManager.setUserState(user.getId(), true);
+                databaseManager.setUserLanguage(user.getId(), Config.Languages.NONE);
 
                 if (databaseManager.getUserRegistrationState(user.getId())) {
                     databaseManager.setUserRegistrationState(user.getId(), true);
                 } else {
                     databaseManager.setUserRegistrationState(user.getId(), false);
                 }
+
+                messageBuilder = Message.getStartMessage(user, false);
             }
 
             databaseManager.setUserWantsRegistrationState(user.getId(), false);
             databaseManager.setUserCommandState(user.getId(), Config.Bot.NO_COMMAND);
-
-            messageBuilder.append("Hello ").append(userName).append(",\n");
-            messageBuilder.append("if you know this bot, you probably already know how to use it, although you can " +
-                    "use the '/help' command. If not, then it " +
-                    "will not be usefull for you. If you have a question concerning this bot, feel free to ask it" +
-                    " via '/ask'.").append("\n\n");
-            messageBuilder.append("Hallo ").append(userName).append(",\n");
-            messageBuilder.append("wenn du diesen Bot kennst, weißt du wahrscheinlich schon wie er zu bedienen ist, " +
-                    "ansonsten benutze den '/help' Befehl. Wenn du diesen Bot noch nicht kennst, wirst " +
-                    "wahrscheinlich nichts mit ihm Anfangen können. Wenn du eine Frage zu diesem Bot hast, stelle " +
-                    "sie mit '/ask'.");
 
             answer.setChatId(chat.getId().toString());
             answer.setText(messageBuilder.toString());

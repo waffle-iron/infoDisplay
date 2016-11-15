@@ -65,6 +65,8 @@ public class Main {
             BotLogger.severe(LOGTAG, e);
         }
 
+        BotLogger.info(LOGTAG, "hallo");
+
         try {
             TelegramBotsApi telegramBotsApi = createTelegramBotsApi();
             try {
