@@ -191,8 +191,9 @@ public class DatabaseManager {
      * @see #getUserLanguage(Integer userId) Get the language prefernce of a user.
      */
     public void setUserLanguage(Integer userId, String language) throws Exception {
-        if (!language.equals(Config.Languages.ENGLISH) ||
-                !language.equals(Config.Languages.GERMAN)) {
+        if (!language.equals(Config.Languages.ENGLISH) &&
+                !language.equals(Config.Languages.GERMAN) &&
+                !language.equals(Config.Languages.NONE)) {
             throw new IllegalArgumentException("No supported language.");
         }
 
@@ -203,6 +204,8 @@ public class DatabaseManager {
         } catch (NullPointerException e) {
             currentConfiguration.addProperty(Config.Keys.USER_LANGUAGE, language);
         }
+
+        currentBuilder.save();
     }
 
     /**
@@ -214,7 +217,7 @@ public class DatabaseManager {
     public String getUserLanguage(Integer userId) throws Exception {
         setCurrentConfiguration(userId);
         if (currentConfiguration.getString(Config.Keys.USER_LANGUAGE).equals(Config.Languages.NONE)) {
-            throw new Exception("No language preference set for this user.");
+            throw new IllegalArgumentException("No language preference set for this user.");
         }
         return currentConfiguration.getString(Config.Keys.USER_LANGUAGE);
     }
