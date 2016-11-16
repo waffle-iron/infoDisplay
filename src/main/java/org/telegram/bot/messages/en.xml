@@ -46,11 +46,15 @@
         <case case="userKnown">
             <part position="1">Hello</part>
             <part position="2">,/n>nice to see you again. I hope you still know all the commands, if not
-            the '/help' command will always be you guide.</part>
+                the '/help' command will always be you guide.</part>
         </case>
     </command_message>
     <command_message command="stop_command">
         <part position="1">Bye</part>
         <part position="2">./n>It was nice to work with you.</part>
+    </command_message>
+    <command_message command="send_on_error_occurred_command">
+        <part position="1">An internal error occurred while processing your request. Please contact the
+            administrator.</part>
     </command_message>
 </language>

@@ -154,4 +154,26 @@ public class Message {
 
         return stopMessage.toString();
     }
+
+    public static String getOnErrorOccurredMessage(User user) {
+
+        final String onErrorOccurredMessageQuarry = "command_message[@command='on_error_occurred_command']/";
+
+        String onErrorOccurredMessage;
+
+        XMLConfiguration config = null;
+
+        try {
+            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
+        } catch (IllegalArgumentException e) {
+            config = getXmlConfiguration(Config.Languages.ENGLISH);
+        } catch (Exception e) {
+            BotLogger.error(LOGTAG, e);
+        }
+
+        onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "part[@position=1]").replaceAll("/n>",
+                "\n");
+
+        return onErrorOccurredMessage;
+    }
 }

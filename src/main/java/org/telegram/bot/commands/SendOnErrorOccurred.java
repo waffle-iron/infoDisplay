@@ -33,6 +33,7 @@ package org.telegram.bot.commands;
 
 import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -69,14 +70,13 @@ public class SendOnErrorOccurred extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] LOGTAG) {
 
-        StringBuilder messageBuilder = new StringBuilder();
+        String message;
         SendMessage answer = new SendMessage();
 
-        messageBuilder.append("Es ist ein interner Fehler aufgetreten, bitte informiere den Administrator dieses " +
-                "Bots darüber.");
+        message = Message.getOnErrorOccurredMessage(user);
 
         answer.setChatId(chat.getId().toString());
-        answer.setText(messageBuilder.toString());
+        answer.setText(message);
 
         try {
             absSender.sendMessage(answer);
