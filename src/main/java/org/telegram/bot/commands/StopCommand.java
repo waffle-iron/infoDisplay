@@ -34,6 +34,7 @@ package org.telegram.bot.commands;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.Config;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -79,9 +80,8 @@ public class StopCommand extends BotCommand {
 
         try {
             DatabaseManager databaseManager = DatabaseManager.getInstance();
-            StringBuilder messageBuilder = new StringBuilder();
+            String message;
 
-            String userName = getFilteredUsername(user);
 
             try {
                 databaseManager.setUserState(user.getId(), false);
@@ -95,10 +95,10 @@ public class StopCommand extends BotCommand {
                 BotLogger.error(LOGTAG, e);
             }
 
-            messageBuilder.append("Tschüss ").append(userName).append(".\n").append("War 'ne schöne Zeit mit dir.");
+            message = Message.getStopMessage(user);
 
             answer.setChatId(chat.getId().toString());
-            answer.setText(messageBuilder.toString());
+            answer.setText(message);
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
 
