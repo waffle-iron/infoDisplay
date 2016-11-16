@@ -57,4 +57,20 @@
         <part position="1">An internal error occurred while processing your request. Please contact the
             administrator.</part>
     </command_message>
+    <command_message command="register_command">
+        <case case="alreadyRegistered">
+            <part position="1">You are already registered. Your telegram userID is: </part>
+        </case>
+        <case case="registrationRequestSent">
+            <part position="1">You have already sent a registration request. Your telegram userID is:</part>
+        </case>
+        <case case="newRegistrationRequest">
+            <part position="1">The administrator will be advised that you want to be registered. He will get in
+                contact with you. Your telegram userID is: </part>
+        </case>
+        <case case="toAdmin">
+            <part position="1">The user </part>
+            <part position="2">wants to get registered. His userID is: </part>
+        </case>
+    </command_message>
 </language>
