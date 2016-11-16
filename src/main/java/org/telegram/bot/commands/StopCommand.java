@@ -46,8 +46,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.io.IOException;
 
 import static org.telegram.bot.Main.getFilteredUsername;
-import static org.telegram.bot.Main.sendOnErrorOccurred;
-
 /**
  * @author Florian Warzecha
  * @version 1.0.1

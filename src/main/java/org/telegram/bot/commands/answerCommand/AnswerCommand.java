@@ -45,7 +45,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 import javax.xml.crypto.Data;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha

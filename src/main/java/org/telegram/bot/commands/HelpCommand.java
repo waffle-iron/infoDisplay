@@ -48,7 +48,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha

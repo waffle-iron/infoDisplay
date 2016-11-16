@@ -57,7 +57,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
+
 
 /**
  * @author Florian Warzecha

@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import static org.telegram.bot.Main.getFilteredUsername;
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha

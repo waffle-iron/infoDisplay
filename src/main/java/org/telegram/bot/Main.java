@@ -56,7 +56,7 @@ public class Main {
 
 
     /* Set up the logger and register the bot */
-    public static void main (String args[]) {
+    public static void main(String args[]) {
         BotLogger.setLevel(Level.ALL);
         BotLogger.registerLogger(new ConsoleHandler());
         try {
@@ -81,6 +81,7 @@ public class Main {
 
     /**
      * Create new {@link TelegramBotsApi}.
+     *
      * @return {@link TelegramBotsApi}
      * @throws TelegramApiException An error in the API, for example network problems.
      */
@@ -92,6 +93,7 @@ public class Main {
 
     /**
      * Create new {@link TelegramBotsApi long polling TelegramBotsApi}.
+     *
      * @return {@link TelegramBotsApi long polling TelegramBotsApi}
      */
     private static TelegramBotsApi createLongPollingTelegramBotsApi() {
@@ -103,6 +105,7 @@ public class Main {
      * If a user has his last and his first name defined, both are returned. If the last name
      * is missing, only the first name is returned. If no user name is defined, the userID is
      * used as Name.
+     *
      * @param user The user from who we want to know the username.
      * @return The username, preferred as combination of his first and last name.
      */
@@ -124,51 +127,24 @@ public class Main {
      * Checks the different possibilities for a username and returns the preferred one.
      * If a user has defined a telegram username, this username is returned. Otherwise the first name is
      * returned, if possible in addition of the last name. If nothing is found, the UserID is used.
+     *
      * @param user The user from who we want to know the username.
      * @return The username, preferred the telegram username.
      */
     public static String getSpecialFilteredUsername(User user) {
         StringBuilder usernameBuilder = new StringBuilder();
 
-        if(user.getUserName() != null) {
+        if (user.getUserName() != null) {
             usernameBuilder.append("@").append(user.getUserName());
-        } else if(user.getFirstName() != null && user.getLastName() != null) {
+        } else if (user.getFirstName() != null && user.getLastName() != null) {
             usernameBuilder.append(user.getFirstName()).append(" ").append(user.getLastName());
-        } else if(user.getFirstName() != null) {
+        } else if (user.getFirstName() != null) {
             usernameBuilder.append(user.getFirstName());
         } else {
             usernameBuilder.append(user.getId());
         }
 
-        return  usernameBuilder.toString();
-    }
-
-    /**
-     * This method is called when an error occurs in one of the bot commands.
-     * It tells the user about the occurrence of an error and prints out the help message.
-     * @param absSender Needed to send a message to the user.
-     * @param user The user the message should go to.
-     * @param chat The chat the message should be send to.
-     * @param LOGTAG The LOGTAG of the command the error occurred in.
-     */
-    public static void sendOnErrorOccurred(AbsSender absSender, User user, Chat chat, String LOGTAG) {
-
-        StringBuilder messageBuilder = new StringBuilder();
-        SendMessage answer = new SendMessage();
-
-        messageBuilder.append("Es ist ein interner Fehler aufgetreten, bitte informiere den Administrator dieses " +
-                "Bots darüber.").append("\n").append("/help");
-
-        answer.setChatId(chat.getId().toString());
-        answer.setText(messageBuilder.toString());
-
-        try {
-            absSender.sendMessage(answer);
-        } catch (TelegramApiException e) {
-            BotLogger.error(LOGTAG, e);
-        }
-
-        new CancelCommand(new DisplayBot().getICommandRegistry()).execute(absSender, user, chat, new String[]{});
+        return usernameBuilder.toString();
     }
 }
 
