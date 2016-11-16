@@ -110,7 +110,6 @@ ant.importBuild 'build.xml'
 
 compileJava.mustRunAfter(updateDisplayFileClass)
 compileJava.mustRunAfter(updateConfigClass)
-compileJava.mustRunAfter(copyLangFiles)
 
 task getHomeDir << {
     println gradle.gradleHomeDir
