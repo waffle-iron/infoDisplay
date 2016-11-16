@@ -39,6 +39,8 @@ import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+import static org.telegram.bot.messages.Message.getIdMessage;
+
 
 /**
  * @author Florian Warzecha
@@ -71,14 +73,10 @@ public class IDCommand extends BotCommand {
         SendMessage answer = new SendMessage();
 
         try {
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Deine UserID ist: ").append(user.getId()).append("\n");
-            messageBuilder.append("Unsere ChatID ist: ").append(chat.getId());
-
-            messageBuilder.append("\n").append("/help");
+            String message = getIdMessage(user, chat.getId());
 
             answer.setChatId(chat.getId().toString());
-            answer.setText(messageBuilder.toString());
+            answer.setText(message);
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
 

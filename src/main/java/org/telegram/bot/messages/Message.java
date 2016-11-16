@@ -112,9 +112,7 @@ public class Message {
 
         StringBuilder startMessage = new StringBuilder();
 
-        XMLConfiguration config = null;
-
-        config = getXmlConfiguration(user.getId());
+        XMLConfiguration config = getXmlConfiguration(user.getId());
 
 
         if (userKnown) {
@@ -142,9 +140,7 @@ public class Message {
 
         StringBuilder stopMessage = new StringBuilder();
 
-        XMLConfiguration config = null;
-
-        config = getXmlConfiguration(user.getId());
+        XMLConfiguration config = getXmlConfiguration(user.getId());
 
         stopMessage.append(config.getString(stopMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n"));
         stopMessage.append(" ");
@@ -160,9 +156,7 @@ public class Message {
 
         String onErrorOccurredMessage;
 
-        XMLConfiguration config = null;
-
-        config = getXmlConfiguration(user.getId());
+        XMLConfiguration config = getXmlConfiguration(user.getId());
 
         onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "part[@position=1]").replaceAll("/n>",
                 "\n");
@@ -175,9 +169,7 @@ public class Message {
 
         StringBuilder registerMessage = new StringBuilder();
 
-        XMLConfiguration config = null;
-
-        config = getXmlConfiguration(user.getId());
+        XMLConfiguration config = getXmlConfiguration(user.getId());
 
         if (ifClause.equals(Config.registerCommandIfClauses.alreadyRegisterd)) {
             registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
@@ -211,5 +203,25 @@ public class Message {
         registerMessage.append("\n").append("/help");
 
         return registerMessage.toString();
+    }
+
+    public static String getIdMessage(User user, Long chatID) {
+        final String idMessageQuarry = "command_message[@command='id_command']/";
+
+        StringBuilder idMessage = new StringBuilder();
+
+        XMLConfiguration config = getXmlConfiguration(user.getId());
+
+        idMessage.append(config.getString(idMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n"));
+        idMessage.append(" ");
+        idMessage.append(user.getId());
+        idMessage.append("\n");
+        idMessage.append(config.getString(idMessageQuarry + "part[@position=2]").replaceAll("/n>", "\n"));
+        idMessage.append(" ");
+        idMessage.append(chatID);
+
+        idMessage.append("\n").append("/help");
+
+        return idMessage.toString();
     }
 }
