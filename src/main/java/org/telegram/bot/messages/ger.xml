@@ -31,8 +31,45 @@
   ~ program possible.
   -->
 
-<!-- Please use '/n>' to prduce a newline character in output -->
+<!-- Please use '/n>' to produce a newline character in output-->
 
 <language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="language.xsd">
     <name>ger</name>
+    <command_message command="start_command">
+        <case case="userUnknown">
+            <part position="1">Hallo</part>
+            <part position="2">,/n>da Du diesen Bot schon kennst, weißt du wahrscheinlich auch schon wie er zu benutzen
+                ist, auch wenn du den '/help' Befehl benutzen kannst. Wenn du diesen Bot noch nicht kennst, wird er
+                wahrscheinlich er dir wahrscheinlich nichts nutzen. Wenn du eine Frage zu diesem Bot hast, benutze
+                einfach den '/ask' Befehl.</part>
+        </case>
+        <case case="userKnown">
+            <part position="1">Hallo</part>
+            <part position="2">,/n>schön dich wieder zu sehen. Ich hoffe dir sind noch alle Befehle bekannt, wenn nicht
+                steht dir der '/help' Befehl mit Rat und Tat zur Seite.</part>
+        </case>
+    </command_message>
+    <command_message command="stop_command">
+        <part position="1">Tschüss</part>
+        <part position="2">./n>War 'ne schöne Zeit mit dir.</part>
+    </command_message>
+    <command_message command="send_on_error_occurred_command">
+        <part position="1">Es ist ein interner Fehler aufgetreten. Benachrichtige bitte den Administrator.</part>
+    </command_message>
+    <command_message command="register_command">
+        <case case="alreadyRegistered">
+            <part position="1">Du bist bereits registriert. Deine Telegram userID ist: </part>
+        </case>
+        <case case="registrationRequestSent">
+            <part position="1">Du hast bereits eine Anfrage zur Registrierung gesendet. Deine Telegram userID ist: </part>
+        </case>
+        <case case="newRegistrationRequest">
+            <part position="1">Ich werde den Administratot über deine Anfrage zur Registrierung informieren. Er wird
+                dich deshalb in Kürze kontaktieren. Deine Telegram userID ist: </part>
+        </case>
+        <case case="toAdmin">
+            <part position="1">Der Benutzer </part>
+            <part position="2">möchte registriert werden. Seine userID ist: </part>
+        </case>
+    </command_message>
 </language>

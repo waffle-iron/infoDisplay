@@ -38,10 +38,9 @@
     <command_message command="start_command">
         <case case="userUnknown">
             <part position="1">Hello</part>
-            <part position="2">,/n>if you know this bot, you probably already know how to use it, although you can use
-                the '/help' command. If not, it probably will not be useful for you. If you have a question concerning
-                this bot, feel free to ask it via '/ask'.
-            </part>
+            <part position="2">,/n>as you know this bot, you probably already know how to use it, although you can use
+                the '/help' command. If you do not know it yet, it probably will not be useful for you. If you have a
+                question concerning this bot, feel free to ask it via '/ask'.</part>
         </case>
         <case case="userKnown">
             <part position="1">Hello</part>
@@ -65,8 +64,8 @@
             <part position="1">You have already sent a registration request. Your telegram userID is:</part>
         </case>
         <case case="newRegistrationRequest">
-            <part position="1">The administrator will be advised that you want to be registered. He will get in
-                contact with you. Your telegram userID is: </part>
+            <part position="1">The administrator will be advised that you want to be registered. That why he will get in
+                contact with you soon. Your telegram userID is: </part>
         </case>
         <case case="toAdmin">
             <part position="1">The user </part>
