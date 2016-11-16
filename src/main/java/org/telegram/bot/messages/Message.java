@@ -72,7 +72,7 @@ public class Message {
             Message.class.getResource(Message.class.getSimpleName() + ".class").toString());
     public static final Path dtd = FileSystems.getDefault().getPath(location.getParent() + "/language.xsd");
 
-    public static StringBuilder getStartMessage(User user, boolean userKnown) {
+    public static String getStartMessage(User user, boolean userKnown) {
 
         final String startMessageQuarry = "command_message[@command='start_command']/";
 
@@ -124,6 +124,6 @@ public class Message {
                      .replaceAll("/n>", "\n"));
         }
 
-        return startMessage;
+        return startMessage.toString();
     }
 }

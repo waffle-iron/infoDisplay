@@ -78,7 +78,7 @@ public class StartCommand extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
 
-        StringBuilder messageBuilder = new StringBuilder();
+        String message;
         SendMessage answer = new SendMessage();
 
         try {
@@ -93,7 +93,7 @@ public class StartCommand extends BotCommand {
             }
 
             if (userKnown) {
-                messageBuilder = Message.getStartMessage(user, true);
+                message = Message.getStartMessage(user, true);
             } else {
                 databaseManager.setUserState(user.getId(), true);
                 databaseManager.setUserLanguage(user.getId(), Config.Languages.NONE);
@@ -104,14 +104,14 @@ public class StartCommand extends BotCommand {
                     databaseManager.setUserRegistrationState(user.getId(), false);
                 }
 
-                messageBuilder = Message.getStartMessage(user, false);
+                message = Message.getStartMessage(user, false);
             }
 
             databaseManager.setUserWantsRegistrationState(user.getId(), false);
             databaseManager.setUserCommandState(user.getId(), Config.Bot.NO_COMMAND);
 
             answer.setChatId(chat.getId().toString());
-            answer.setText(messageBuilder.toString());
+            answer.setText(message);
 
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
