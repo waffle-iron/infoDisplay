@@ -31,7 +31,7 @@
 
 package org.telegram.bot.messages;
 
-import liketechnik.InfoDisplay.Config;
+import org.telegram.bot.Config;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
@@ -56,6 +56,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import static org.telegram.bot.Main.getFilteredUsername;
+import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha
@@ -72,13 +73,8 @@ public class Message {
             Message.class.getResource(Message.class.getSimpleName() + ".class").toString());
     public static final Path dtd = FileSystems.getDefault().getPath(location.getParent() + "/language.xsd");
 
-    public static String getStartMessage(User user, boolean userKnown) {
-
-        final String startMessageQuarry = "command_message[@command='start_command']/";
-
-        StringBuilder startMessage = new StringBuilder();
-
-        FileBasedConfigurationBuilder<XMLConfiguration> builder = null;
+    private static XMLConfiguration getXmlConfiguration(String language) {
+        FileBasedConfigurationBuilder<XMLConfiguration> builder;
         XMLConfiguration config = null;
 
         XMLBuilderParameters params = new Parameters().xml();
@@ -86,19 +82,8 @@ public class Message {
         params.setSchemaValidation(true);
         params.setExpressionEngine(new XPathExpressionEngine());
 
-        try {
-            builder =
-                    new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
-                    .configure(params.setFileName(location.getParent().toString() + "/" +
-                            DatabaseManager.getInstance().getUserLanguage(user.getId()) + ".xml"));
-        } catch (Exception e) {
-            BotLogger.error(LOGTAG, e);
-            if (e.getClass() == IllegalArgumentException.class) {
-                builder =
-                        new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
-                                .configure(params.setFileName(location.getParent().toString() + "/english.xml"));
-            }
-        }
+        builder = new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                .configure(params.setFileName(location.getParent().toString() + "/" + language + ".xml"));
 
         try {
             config = builder.getConfiguration();
@@ -107,8 +92,27 @@ public class Message {
             System.exit(2);
         }
 
+        return  config;
+    }
 
-         if (userKnown) {
+    public static String getStartMessage(User user, boolean userKnown) {
+
+        final String startMessageQuarry = "command_message[@command='start_command']/";
+
+        StringBuilder startMessage = new StringBuilder();
+
+        XMLConfiguration config = null;
+
+        try {
+            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
+        } catch (IllegalArgumentException e) {
+            config = getXmlConfiguration(Config.Languages.ENGLISH);
+        } catch (Exception e) {
+            BotLogger.error(LOGTAG, e);
+        }
+
+
+        if (userKnown) {
              startMessage.append(config.getString(startMessageQuarry + "case[@case='userKnown']/part[@position=1]")
                      .replaceAll("/n>", "\n"));
              startMessage.append(" ");
@@ -125,5 +129,29 @@ public class Message {
         }
 
         return startMessage.toString();
+    }
+
+    public static String getStopMessage(User user) {
+
+        final String stopMessageQuarry = "command_message[@command='stop_command']/";
+
+        StringBuilder stopMessage = new StringBuilder();
+
+        XMLConfiguration config = null;
+
+        try {
+            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
+        } catch (IllegalArgumentException e) {
+            config = getXmlConfiguration(Config.Languages.ENGLISH);
+        } catch (Exception e) {
+            BotLogger.error(LOGTAG, e);
+        }
+
+        stopMessage.append(config.getString(stopMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n"));
+        stopMessage.append(" ");
+        stopMessage.append(getFilteredUsername(user));
+        stopMessage.append(config.getString(stopMessageQuarry + "part[@position=2]").replaceAll("/n>", "\n"));
+
+        return stopMessage.toString();
     }
 }
