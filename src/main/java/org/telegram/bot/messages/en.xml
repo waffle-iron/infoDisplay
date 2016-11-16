@@ -72,4 +72,8 @@
             <part position="2">wants to get registered. His userID is: </part>
         </case>
     </command_message>
+    <command_message command="id_command">
+        <part position="1">Your telegram userID is:</part>
+        <part position="2">The chatID is:</part>
+    </command_message>
 </language>

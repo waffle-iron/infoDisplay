@@ -72,4 +72,8 @@
             <part position="2">möchte registriert werden. Seine userID ist: </part>
         </case>
     </command_message>
+    <command_message command="id_command">
+        <part position="1">Deine Telegram userID ist:</part>
+        <part position="2">Die chatID ist:</part>
+    </command_message>
 </language>
