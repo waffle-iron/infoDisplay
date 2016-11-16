@@ -63,7 +63,7 @@
         <case case="registrationRequestSent">
             <part position="1">Du hast bereits eine Anfrage zur Registrierung gesendet. Deine Telegram userID ist: </part>
         </case>
-        <case case="newRegistrationRequest">
+        <case case="sendRegistrationRequest">
             <part position="1">Ich werde den Administratot über deine Anfrage zur Registrierung informieren. Er wird
                 dich deshalb in Kürze kontaktieren. Deine Telegram userID ist: </part>
         </case>

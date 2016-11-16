@@ -35,6 +35,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.telegram.bot.Config;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -46,7 +47,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.io.IOException;
 
 import static org.telegram.bot.Main.getSpecialFilteredUsername;
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha
@@ -84,47 +84,28 @@ public class RegisterCommand extends BotCommand {
             DatabaseManager databaseManager = DatabaseManager.getInstance();
             databaseManager.setUserState(user.getId(), true);
 
-            StringBuilder messageBuilder = new StringBuilder();
+            String message;
 
             if (databaseManager.getUserRegistrationState(user.getId())) {
-                messageBuilder.append("Du bist bereits als Benutzer dieses Bots registriert, deine Telegramm UserID " +
-                        "ist: ");
+                message = Message.getRegisterMessage(user, Config.registerCommandIfClauses.alreadyRegisterd);
             } else {
                 if (databaseManager.getUserWantsRegistrationState(user.getId())) {
-                    messageBuilder.append("Du hast bereits eine Anfrage zur Registrierung abgeschickt, deine " +
-                            "Telegramm UserID ist: ");
+                    message = Message.getRegisterMessage(user, Config.registerCommandIfClauses.registrationRequestSent);
                 } else {
                     databaseManager.setUserWantsRegistrationState(user.getId(), true);
 
-                    messageBuilder.append("Der Adminsitrator dieses Bots (@liketechnik2000) " +
-                            "weiß nun, dass du dich registrieren lassen möchtest. Er wird dich kontaktieren, deine " +
-                            "Telegramm UserID ist: ");
-
-                    StringBuilder requestBuilder = new StringBuilder();
-                    requestBuilder.append("Der Benutzer ");
-                    requestBuilder.append(getSpecialFilteredUsername(user));
-                    requestBuilder.append(" möchte sich registrieren lassen. Seine userID ist: ").append(user.getId());
+                    message = Message.getRegisterMessage(user, Config.registerCommandIfClauses.sendRegistrationRequest);
 
                     SendMessage request = new SendMessage();
                     request.setChatId(databaseManager.getAdminChatId().toString());
-                    request.setText(requestBuilder.toString());
+                    request.setText(Message.getRegisterMessage(user, Config.registerCommandIfClauses.toAdmin));
 
-                    try {
-                        absSender.sendMessage(request);
-                    } catch (Exception e1) {
-                        BotLogger.error(LOGTAG, e1);
-                        messageBuilder.append("\n\n").append("Nachricht an den Administrator konnte nicht gesendet werden. Bitte " +
-                                "probiere es erneut.");
-                    }
+                    absSender.sendMessage(request);
                 }
             }
 
-            messageBuilder.append(user.getId());
-
-            messageBuilder.append("\n").append("/help");
-
             answer.setChatId(chat.getId().toString());
-            answer.setText(messageBuilder.toString());
+            answer.setText(message);
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
 

@@ -114,4 +114,11 @@ public final class Config {
 
         public static final String NONE = "none";
     }
+
+    public static final class registerCommandIfClauses {
+        public static final String alreadyRegisterd = "alreadyRegistered";
+        public static final String registrationRequestSent = "registrationRequestSent";
+        public static final String sendRegistrationRequest = "sendRegistrationRequest";
+        public static final String toAdmin = "toAdmin";
+    }
 }

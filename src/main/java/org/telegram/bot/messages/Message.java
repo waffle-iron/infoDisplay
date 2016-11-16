@@ -56,7 +56,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import static org.telegram.bot.Main.getFilteredUsername;
-import static org.telegram.bot.Main.sendOnErrorOccurred;
+import static org.telegram.bot.Main.getSpecialFilteredUsername;
 
 /**
  * @author Florian Warzecha
@@ -73,7 +73,9 @@ public class Message {
             Message.class.getResource(Message.class.getSimpleName() + ".class").toString());
     public static final Path dtd = FileSystems.getDefault().getPath(location.getParent() + "/language.xsd");
 
-    private static XMLConfiguration getXmlConfiguration(String language) {
+    private static XMLConfiguration getXmlConfiguration(int userID) {
+        String language = null;
+
         FileBasedConfigurationBuilder<XMLConfiguration> builder;
         XMLConfiguration config = null;
 
@@ -81,6 +83,15 @@ public class Message {
         params.setBasePath(location.toString());
         params.setSchemaValidation(true);
         params.setExpressionEngine(new XPathExpressionEngine());
+
+        try {
+            language = DatabaseManager.getInstance().getUserLanguage(userID);
+        } catch (IllegalArgumentException e) {
+            language = Config.Languages.ENGLISH;
+        } catch (Exception e) {
+            BotLogger.error(LOGTAG, e);
+            System.exit(10);
+        }
 
         builder = new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
                 .configure(params.setFileName(location.getParent().toString() + "/" + language + ".xml"));
@@ -103,13 +114,7 @@ public class Message {
 
         XMLConfiguration config = null;
 
-        try {
-            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
-        } catch (IllegalArgumentException e) {
-            config = getXmlConfiguration(Config.Languages.ENGLISH);
-        } catch (Exception e) {
-            BotLogger.error(LOGTAG, e);
-        }
+        config = getXmlConfiguration(user.getId());
 
 
         if (userKnown) {
@@ -139,13 +144,7 @@ public class Message {
 
         XMLConfiguration config = null;
 
-        try {
-            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
-        } catch (IllegalArgumentException e) {
-            config = getXmlConfiguration(Config.Languages.ENGLISH);
-        } catch (Exception e) {
-            BotLogger.error(LOGTAG, e);
-        }
+        config = getXmlConfiguration(user.getId());
 
         stopMessage.append(config.getString(stopMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n"));
         stopMessage.append(" ");
@@ -163,17 +162,54 @@ public class Message {
 
         XMLConfiguration config = null;
 
-        try {
-            config = getXmlConfiguration(DatabaseManager.getInstance().getUserLanguage(user.getId()));
-        } catch (IllegalArgumentException e) {
-            config = getXmlConfiguration(Config.Languages.ENGLISH);
-        } catch (Exception e) {
-            BotLogger.error(LOGTAG, e);
-        }
+        config = getXmlConfiguration(user.getId());
 
         onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "part[@position=1]").replaceAll("/n>",
                 "\n");
 
         return onErrorOccurredMessage;
+    }
+
+    public static String getRegisterMessage(User user, String ifClause) {
+        final String registerMessageQuarry = "command_message[@=command'register_command']/";
+
+        StringBuilder registerMessage = new StringBuilder();
+
+        XMLConfiguration config = null;
+
+        config = getXmlConfiguration(user.getId());
+
+        if (ifClause.equals(Config.registerCommandIfClauses.alreadyRegisterd)) {
+            registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
+                    Config.registerCommandIfClauses.alreadyRegisterd + "']/part[@position=1]").replaceAll("/n>", "\n"));
+            registerMessage.append(" ");
+            registerMessage.append(user.getId());
+        } else if (ifClause.equals(Config.registerCommandIfClauses.registrationRequestSent)) {
+            registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
+                    Config.registerCommandIfClauses.registrationRequestSent + "']/part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+            registerMessage.append(" ");
+            registerMessage.append(user.getId());
+        } else if (ifClause.equals(Config.registerCommandIfClauses.sendRegistrationRequest)) {
+            registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
+                    Config.registerCommandIfClauses.sendRegistrationRequest + "']/part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+            registerMessage.append(" ");
+            registerMessage.append(user.getId());
+        } else if (ifClause.equals(Config.registerCommandIfClauses.toAdmin)) {
+            registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
+                    Config.registerCommandIfClauses.toAdmin + "']/part[@position=1]").replaceAll("/n>", "\n"));
+            registerMessage.append(" ");
+            registerMessage.append(getSpecialFilteredUsername(user));
+            registerMessage.append(" ");
+            registerMessage.append(config.getString(registerMessageQuarry + "case[@case='" +
+                    Config.registerCommandIfClauses.toAdmin + "']/part[@position=2]").replaceAll("/n>", "\n"));
+            registerMessage.append(" ");
+            registerMessage.append(user.getId());
+        }
+
+        registerMessage.append("\n").append("/help");
+
+        return registerMessage.toString();
     }
 }
