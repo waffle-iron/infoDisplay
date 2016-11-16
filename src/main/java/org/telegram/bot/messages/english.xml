@@ -49,4 +49,8 @@
             the '/help' command will always be you guide.</part>
         </case>
     </command_message>
+    <command_message command="stop_command">
+        <part position="1">Bye</part>
+        <part position="2">./n>It was nice to work with you.</part>
+    </command_message>
 </language>
