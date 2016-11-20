@@ -58,7 +58,7 @@ public class Main {
 
 
     /* Set up the logger and register the bot */
-    public static void main(String args[]) {
+    public static void main (String args[]) {
         BotLogger.setLevel(Level.ALL);
         BotLogger.registerLogger(new ConsoleHandler());
         try {
@@ -68,8 +68,6 @@ public class Main {
         }
 
         ApiContextInitializer.init();
-
-        BotLogger.info(LOGTAG, "hallo");
 
         try {
             TelegramBotsApi telegramBotsApi = createTelegramBotsApi();
@@ -134,17 +132,17 @@ public class Main {
     public static String getSpecialFilteredUsername(User user) {
         StringBuilder usernameBuilder = new StringBuilder();
 
-        if (user.getUserName() != null) {
+        if(user.getUserName() != null) {
             usernameBuilder.append("@").append(user.getUserName());
-        } else if (user.getFirstName() != null && user.getLastName() != null) {
+        } else if(user.getFirstName() != null && user.getLastName() != null) {
             usernameBuilder.append(user.getFirstName()).append(" ").append(user.getLastName());
-        } else if (user.getFirstName() != null) {
+        } else if(user.getFirstName() != null) {
             usernameBuilder.append(user.getFirstName());
         } else {
             usernameBuilder.append(user.getId());
         }
 
-        return usernameBuilder.toString();
+        return  usernameBuilder.toString();
     }
 
     /**
