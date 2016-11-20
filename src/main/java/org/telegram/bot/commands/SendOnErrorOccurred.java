@@ -73,7 +73,7 @@ public class SendOnErrorOccurred extends BotCommand {
         String message;
         SendMessage answer = new SendMessage();
 
-        message = Message.getSendOnErrorOccurredCommand(user);
+        message = Message.getSendOnErrorOccurredMessage(user);
 
         answer.setChatId(chat.getId().toString());
         answer.setText(message);
