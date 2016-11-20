@@ -33,6 +33,8 @@ package org.telegram.bot;
 
 import org.telegram.bot.commands.CancelCommand;
 import org.telegram.bot.commands.HelpCommand;
+import org.telegram.telegrambots.ApiContext;
+import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
@@ -64,6 +66,8 @@ public class Main {
         } catch (IOException e) {
             BotLogger.severe(LOGTAG, e);
         }
+
+        ApiContextInitializer.init();
 
         try {
             TelegramBotsApi telegramBotsApi = createTelegramBotsApi();
