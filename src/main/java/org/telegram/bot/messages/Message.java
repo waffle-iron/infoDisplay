@@ -150,9 +150,9 @@ public class Message {
         return stopMessage.toString();
     }
 
-    public static String getOnErrorOccurredMessage(User user) {
+    public static String getSendOnErrorOccurredMessage(User user) {
 
-        final String onErrorOccurredMessageQuarry = "command_message[@command='on_error_occurred_command']/";
+        final String onErrorOccurredMessageQuarry = "command_message[@command='send_on_error_occurred_command']/";
 
         String onErrorOccurredMessage;
 
@@ -165,7 +165,7 @@ public class Message {
     }
 
     public static String getRegisterMessage(User user, String ifClause) {
-        final String registerMessageQuarry = "command_message[@=command'register_command']/";
+        final String registerMessageQuarry = "command_message[@=command='register_command']/";
 
         StringBuilder registerMessage = new StringBuilder();
 
