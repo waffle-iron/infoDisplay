@@ -33,6 +33,7 @@ package org.telegram.bot.commands;
 
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.telegram.bot.Config;
 import org.telegram.bot.database.DatabaseManager;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -121,15 +122,7 @@ public class HelpCommand extends BotCommand {
         } catch (Exception e) {
             BotLogger.error(LOGTAG, e);
 
-            answer.setText("Der Bot ist aufgrund eines Fehlers beendet worden. Bitte informiere den Administrator.");
-
-            try {
-                absSender.sendMessage(answer);
-            } catch (TelegramApiException e1) {
-                BotLogger.error(LOGTAG, e1);
-            }
-
-            System.exit(1);
+            new SendOnErrorOccurred().execute(absSender, user, chat, new String[]{LOGTAG});
         }
 
         try {

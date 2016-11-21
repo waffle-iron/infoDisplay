@@ -33,6 +33,8 @@ package org.telegram.bot.commands;
 
 import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot;
+import org.telegram.bot.Main;
+import org.telegram.bot.ResetRecentlyError;
 import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
@@ -70,13 +72,21 @@ public class SendOnErrorOccurred extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] LOGTAG) {
 
-        String message;
+        StringBuilder messageBuilder = new StringBuilder();
         SendMessage answer = new SendMessage();
 
-        message = Message.getSendOnErrorOccurredMessage(user);
-
         answer.setChatId(chat.getId().toString());
-        answer.setText(message);
+
+        if (ResetRecentlyError.getRecentlyError()) {
+            ResetRecentlyError.setAppIsTerminating(true);
+            messageBuilder.append("Der Bot ist aufgrund eines Fehlers beendet worden. Bitte informiere den " +
+                    "Administrator.");
+        } else {
+            messageBuilder.append("Es ist ein interner Fehler aufgetreten, bitte informiere den Administrator dieses " +
+                    "Bots darüber.");
+        }
+
+        answer.setText(messageBuilder.toString());
 
         try {
             absSender.sendMessage(answer);
@@ -84,6 +94,13 @@ public class SendOnErrorOccurred extends BotCommand {
             BotLogger.error(LOGTAG[0], e);
         }
 
-        new CancelCommand(new DisplayBot().getICommandRegistry()).execute(absSender, user, chat, new String[]{});
+        if (ResetRecentlyError.getRecentlyError()) {
+            System.exit(1);
+        } else {
+            ResetRecentlyError.setRecentlyError(true);
+            new ResetRecentlyError().start();
+
+            new CancelCommand(new DisplayBot().getICommandRegistry()).execute(absSender, user, chat, new String[]{});
+        }
     }
 }
