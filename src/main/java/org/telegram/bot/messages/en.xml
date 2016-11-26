@@ -76,4 +76,12 @@
         <part position="1">Your telegram userID is:</part>
         <part position="2">The chatID is:</part>
     </command_message>
+    <command_message command="help_command">
+        <part position="1">*Help*/n>/n>
+            _Description_/n>
+            Mit diesem Bot kannst Du Bilder an das virtuelle Brett hochladen, bearbeiten und wieder löschen. Als
+            Administrator kannst du auch veraltete Bilder *anderer* löschen und deren Eigenschaften bearbeiten./n>/n>
+            _How to use me:_/n>
+        </part>
+    </command_message>
 </language>
