@@ -93,4 +93,15 @@
     <command_message command="administrator_command">
         <part position="1">Ersteller / Administrator dieses Bots ist @liketechnik2000.</part>
     </command_message>
+    <command_package command="pinPictureCommand">
+        <command_message command="pin_picture_command">
+            <case case="no_permission">
+                <part position="1">Du bist nicht berechtigt Bilder hochzuladen./n>
+                    Benutze /register um als berechtigte Person eingetragen zu werden./n></part>
+            </case>
+            <case case="permission">
+                <part position="1">Bitte sende mir einen Namen für dein Bild.</part>
+            </case>
+        </command_message>
+    </command_package>
 </language>

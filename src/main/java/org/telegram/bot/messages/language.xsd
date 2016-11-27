@@ -68,11 +68,21 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="command_package">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element ref="command_message" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="command" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="language">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="name" minOccurs="1" maxOccurs="1"/>
                 <xs:element ref="command_message" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="command_package" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
