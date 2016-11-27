@@ -103,5 +103,32 @@
                 <part position="1">Bitte sende mir einen Namen für dein Bild.</part>
             </case>
         </command_message>
+        <command_message command="send_description">
+            <part position="1">Sende mir nun die Anzeigedauer für dein Bild.</part>
+        </command_message>
+        <command_message command="send_duration">
+            <case case="invalid_duration">
+                <part position="1">Bitte gib eine gültige Anzeigedauer an.</part>
+            </case>
+            <case case="valid_duration">
+                <part position="1">Sende mir nun bitte das Bild.</part>
+            </case>
+        </command_message>
+        <command_message command="send_picture">
+            <case case="no_picture">
+                <part position="1">Sende mir bitte ein Bild.</part>
+            </case>
+            <case case="picture">
+                <part position="1">Du hast ein neues Bild an das Brett hochgeladen.</part>
+            </case>
+        </command_message>
+        <command_message command="send_title">
+            <case case="already_used">
+                <part position="1">Dieser Name wurde schon für ein Bild gewählt. Bitte nimm einen anderen.</part>
+            </case>
+            <case case="new_name">
+                <part position="1">Bitte sende mir nun eine (kurze) Beschreibung / Überschrift für dein Bild.</part>
+            </case>
+        </command_message>
     </command_package>
 </language>
