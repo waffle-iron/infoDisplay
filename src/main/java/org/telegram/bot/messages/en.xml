@@ -53,8 +53,14 @@
         <part position="2">./n>It was nice to work with you.</part>
     </command_message>
     <command_message command="send_on_error_occurred_command">
-        <part position="1">An internal error occurred while processing your request. Please contact the
-            administrator.</part>
+        <case case="terminating">
+            <part position="1">The bot was terminated because of an internal error. Please advise the administrator of
+                this event.</part>
+        </case>
+        <case case="not_terminating">
+            <part position="1">An internal error occurred while processing your request. Please contact the
+                administrator.</part>
+        </case>
     </command_message>
     <command_message command="register_command">
         <case case="alreadyRegistered">

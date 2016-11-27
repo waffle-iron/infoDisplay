@@ -54,7 +54,13 @@
         <part position="2">./n>War 'ne schöne Zeit mit dir.</part>
     </command_message>
     <command_message command="send_on_error_occurred_command">
-        <part position="1">Es ist ein interner Fehler aufgetreten. Benachrichtige bitte den Administrator.</part>
+        <case case="terminating">
+            <part position="1">Der Bot ist aufgrund eines Fehlers beendet worden. Bitte informiere den Administrator.
+            </part>
+        </case>
+        <case case="not_terminating">
+            <part position="1">Es ist ein interner Fehler aufgetreten. Benachrichtige bitte den Administrator.</part>
+        </case>
     </command_message>
     <command_message command="register_command">
         <case case="alreadyRegistered">
