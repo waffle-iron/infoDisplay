@@ -35,6 +35,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -80,9 +81,7 @@ public class PinPictureCommand extends BotCommand {
             StringBuilder messageBuilder = new StringBuilder();
 
             if (!databaseManager.getUserRegistrationState(user.getId())) {
-                messageBuilder.append("Du bist nicht berechtigt Bilder hochzuladen.").append("\n");
-                messageBuilder.append("Benutze /register um als berechtigte Person eingetragen " +
-                        "zu werden.").append("\n").append("/help");
+                messageBuilder.append(Message.pinPictureCommand.getPinPictureMessage(user, false));
 
                 answerMessage.setText(messageBuilder.toString());
 
@@ -97,7 +96,7 @@ public class PinPictureCommand extends BotCommand {
 
             databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_TITLE);
 
-            messageBuilder.append("Bitte sende mir den Namen deines Bildes.");
+            messageBuilder.append(Message.pinPictureCommand.getPinPictureMessage(user, true));
 
             answerMessage.setText(messageBuilder.toString());
             answerMessage.setChatId(user.getId().toString());

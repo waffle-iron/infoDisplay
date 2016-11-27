@@ -34,6 +34,7 @@ package org.telegram.bot.commands.pinPictureCommand;
 import liketechnik.InfoDisplay.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -93,7 +94,7 @@ public class SendDuration extends BotCommand {
                     throw new NumberFormatException("Duration is too low.");
                 }
             } catch (NumberFormatException e) {
-                messageBuilder.append("Bitte gib eine gültige Dauer ein.");
+                messageBuilder.append(Message.pinPictureCommand.getSendDurationMessage(user, false));
                 answer.setText(messageBuilder.toString());
 
                 try {
@@ -105,7 +106,7 @@ public class SendDuration extends BotCommand {
                 return;
             }
 
-            messageBuilder.append("Sende mir nun bitte das Bild.");
+            messageBuilder.append(Message.pinPictureCommand.getSendDurationMessage(user, true));
 
             databaseManager.setCurrentPictureDuration(user.getId(), duration);
             databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_PICTURE);
