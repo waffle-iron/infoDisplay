@@ -224,4 +224,18 @@ public class Message {
 
         return idMessage.toString();
     }
+
+    public static String getHelpMessage(User user, Long chatId) {
+        final String helpMessageQuarry = "command_message[@command='help_command']/";
+
+        XMLConfiguration config = getXmlConfiguration(user.getId());
+
+        StringBuilder helpMessage = new StringBuilder();
+
+        helpMessage.append(config.getString(helpMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n"));
+
+        helpMessage.append("\n").append("/help");
+
+        return helpMessage.toString();
+    }
 }
