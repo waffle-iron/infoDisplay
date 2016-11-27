@@ -254,4 +254,100 @@ public class Message {
 
         return administratorMessage.toString();
     }
+
+    public static class pinPictureCommand {
+        static final String pinPictureQuarry = "command_package[@command='pinPictureCommand']/";
+
+        public static String getPinPictureMessage(User user, boolean hasPermission) {
+            final String pinPictureMessageQuarry = pinPictureQuarry + "command_message[@command='pin_picture_command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder pinPictureMessage = new StringBuilder();
+
+            if (hasPermission) {
+                pinPictureMessage.append(config.getString(pinPictureMessageQuarry + "case[@case='has_permission']/" +
+                        "part[@position=1]").replaceAll("/n>", "\n"));
+            } else {
+                pinPictureMessage.append(config.getString(pinPictureMessageQuarry + "case[@case='has_no_" +
+                        "permission']/part[@position=1]").replaceAll("/n>", "\n"));
+            }
+
+            return pinPictureMessage.toString();
+        }
+
+        public static String getSendDescriptionMessage(User user) {
+            final String sendDescriptionMessageQuarry = pinPictureQuarry + "command_message[@command='send_description_" +
+                    "command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder sendDescriptionMessage = new StringBuilder();
+
+            sendDescriptionMessage.append(config.getString(sendDescriptionMessageQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+
+            return sendDescriptionMessage.toString();
+        }
+
+        public static String getSendDurationMessage(User user, boolean validDuration) {
+            final String sendDurationMessageQuarry = pinPictureQuarry + "command_message[@command='send_duration_" +
+                    "command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder sendDurationMessage = new StringBuilder();
+
+            if (validDuration) {
+                sendDurationMessage.append(config.getString(sendDurationMessageQuarry + "case[@case='valid_" +
+                        "duration']/" +
+                        "part[@position=1]").replaceAll("/n>", "\n"));
+            } else {
+                sendDurationMessage.append(config.getString(sendDurationMessageQuarry + "case[@case='invalid_" +
+                        "duration']/part[@position=1]").replaceAll("/n>", "\n"));
+            }
+
+            return sendDurationMessage.toString();
+        }
+
+        public static String getSendPictureMessage(User user, boolean hasPicture) {
+            final String sendPictureMessageQuarry = pinPictureQuarry + "command_message[@command='send_picture_" +
+                    "command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder sendPictureMessage = new StringBuilder();
+
+            if (hasPicture) {
+                sendPictureMessage.append(config.getString(sendPictureMessageQuarry + "case[@case='picture']/" +
+                        "part[@position=1]").replaceAll("/n>", "\n"));
+            } else {
+                sendPictureMessage.append(config.getString(sendPictureMessageQuarry + "case[@case='no_picture']/" +
+                        "part[@position=1]").replaceAll("/n>", "\n"));
+            }
+
+            return sendPictureMessage.toString();
+        }
+
+        public static String getSendTitleMessage(User user, boolean newName) {
+            final String sendTitleMessageQuarry = pinPictureQuarry + "command_message[@command='send_title_" +
+                    "command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder sendTitleMessage = new StringBuilder();
+
+            if (newName) {
+                sendTitleMessage.append(config.getString(sendTitleMessageQuarry + "case[@case='new_name']/" +
+                        "part[@position=1]").replaceAll("/n>", "\n"));
+            } else {
+                sendTitleMessage.append(config.getString(sendTitleMessageQuarry + "case[@case='already_" +
+                        "used']/part[@position=1]").replaceAll("/n>", "\n"));
+            }
+
+            return sendTitleMessage.toString();
+        }
+    }
+
+
 }
