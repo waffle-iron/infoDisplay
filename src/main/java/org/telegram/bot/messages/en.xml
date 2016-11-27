@@ -95,18 +95,18 @@
     </command_message>
     <command_package command="pinPictureCommand">
         <command_message command="pin_picture_command">
-            <case case="no_permission">
+            <case case="has_no_permission">
                 <part position="1">Du bist nicht berechtigt Bilder hochzuladen./n>
                     Benutze /register um als berechtigte Person eingetragen zu werden./n></part>
             </case>
-            <case case="permission">
+            <case case="has_permission">
                 <part position="1">Bitte sende mir einen Namen für dein Bild.</part>
             </case>
         </command_message>
-        <command_message command="send_description">
+        <command_message command="send_description_command">
             <part position="1">Sende mir nun die Anzeigedauer für dein Bild.</part>
         </command_message>
-        <command_message command="send_duration">
+        <command_message command="send_duration_command">
             <case case="invalid_duration">
                 <part position="1">Bitte gib eine gültige Anzeigedauer an.</part>
             </case>
@@ -114,7 +114,7 @@
                 <part position="1">Sende mir nun bitte das Bild.</part>
             </case>
         </command_message>
-        <command_message command="send_picture">
+        <command_message command="send_picture_command">
             <case case="no_picture">
                 <part position="1">Sende mir bitte ein Bild.</part>
             </case>
@@ -122,7 +122,7 @@
                 <part position="1">Du hast ein neues Bild an das Brett hochgeladen.</part>
             </case>
         </command_message>
-        <command_message command="send_title">
+        <command_message command="send_title_command">
             <case case="already_used">
                 <part position="1">Dieser Name wurde schon für ein Bild gewählt. Bitte nimm einen anderen.</part>
             </case>
