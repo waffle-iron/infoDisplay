@@ -79,11 +79,9 @@ public class SendOnErrorOccurred extends BotCommand {
 
         if (ResetRecentlyError.getRecentlyError()) {
             ResetRecentlyError.setAppIsTerminating(true);
-            messageBuilder.append("Der Bot ist aufgrund eines Fehlers beendet worden. Bitte informiere den " +
-                    "Administrator.");
+            messageBuilder.append(Message.getSendOnErrorOccurredMessage(user, true));
         } else {
-            messageBuilder.append("Es ist ein interner Fehler aufgetreten, bitte informiere den Administrator dieses " +
-                    "Bots darüber.");
+            messageBuilder.append(Message.getSendOnErrorOccurredMessage(user, false));
         }
 
         answer.setText(messageBuilder.toString());
