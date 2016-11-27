@@ -150,7 +150,7 @@ public class Message {
         return stopMessage.toString();
     }
 
-    public static String getSendOnErrorOccurredMessage(User user) {
+    public static String getSendOnErrorOccurredMessage(User user, boolean terminating) {
 
         final String onErrorOccurredMessageQuarry = "command_message[@command='send_on_error_occurred_command']/";
 
@@ -158,8 +158,13 @@ public class Message {
 
         XMLConfiguration config = getXmlConfiguration(user.getId());
 
-        onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "part[@position=1]").replaceAll("/n>",
-                "\n");
+        if (terminating) {
+            onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "case[@case='terminating']/" +
+                    "part[@position=1]");
+        } else {
+            onErrorOccurredMessage = config.getString(onErrorOccurredMessageQuarry + "case[@case=" +
+                    "'not_terminating']/part[@position=1]");
+        }
 
         return onErrorOccurredMessage;
     }
