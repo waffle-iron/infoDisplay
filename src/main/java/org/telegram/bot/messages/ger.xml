@@ -90,4 +90,7 @@
             _How to use me:_/n>
         </part>
     </command_message>
+    <command_message command="administrator_command">
+        <part position="1">Ersteller / Administrator dieses Bots ist @liketechnik2000.</part>
+    </command_message>
 </language>

@@ -241,4 +241,17 @@ public class Message {
 
         return helpMessage.toString();
     }
+
+    public static String getAdministratorMessage(User user) {
+        final String administratorMessageQuarry   = "command_message[@command='administrator_command']/";
+
+        XMLConfiguration config = getXmlConfiguration(user.getId());
+
+        StringBuilder administratorMessage = new StringBuilder();
+
+        administratorMessage.append(config.getString(administratorMessageQuarry + "part[@position=1]")
+                .replaceAll("/n>", "\n"));
+
+        return administratorMessage.toString();
+    }
 }
