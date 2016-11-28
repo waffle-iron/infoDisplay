@@ -131,4 +131,18 @@
             </case>
         </command_message>
     </command_package>
+    <command_package command="askCommand">
+        <command_message command="ask_command">
+            <part position="1">Sende mir bitte deine Frage, ich leite sie an den Administrator weiter.</part>
+        </command_message>
+        <command_message command="write_question_command">
+            <case case="question">
+                <part position="1">/n>Von Benutzer:</part>
+                <part position="2">.</part>
+            </case>
+            <case case="response">
+                <part position="1">Deine Frage wurde weitergeleitet.</part>
+            </case>
+        </command_message>
+    </command_package>
 </language>
