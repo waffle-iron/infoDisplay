@@ -349,5 +349,42 @@ public class Message {
         }
     }
 
+    public static class askCommand {
+        static final String askCommandQuarry = "command_package[@command='askCommand']/";
 
+        public static String getAskMessage(User user) {
+            final String askMessageQuarry = askCommandQuarry + "command_message[@command='ask_command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            return config.getString(askMessageQuarry + "part[@position=1]").replaceAll("/n>", "\n");
+        }
+
+        public static String getWriteQuestionMessage(User user, String question) {
+            final String writeQuestionQuarry = askCommandQuarry + "command_message[@command='write_question_" +
+                    "command']/case[@case='question']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder writeQuestionMessage = new StringBuilder();
+
+            writeQuestionMessage.append(question);
+            writeQuestionMessage.append(config.getString(writeQuestionQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+            writeQuestionMessage.append(" ").append(getSpecialFilteredUsername(user));
+            writeQuestionMessage.append(config.getString(writeQuestionQuarry + "part[@position=2]")
+                    .replaceAll("/n>", "\n"));
+
+            return writeQuestionMessage.toString();
+        }
+
+        public static String getWriteQuestionMessage(User user) {
+            final String writeQuestionQuarry = askCommandQuarry + "command_message[@command='write_question_" +
+                    "command']/case[@case='response']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            return config.getString(writeQuestionQuarry + "part[@position=1]").replaceAll("/n>", "\n");
+        }
+    }
 }

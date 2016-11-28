@@ -33,9 +33,9 @@ package org.telegram.bot.commands.askCommand;
 
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
@@ -79,15 +79,14 @@ public class WriteQuestion extends BotCommand {
         try {
             String message = arguments[0];
 
-            StringBuilder questionBuilder = new StringBuilder().append(message);
-            questionBuilder.append("\n").append("From user ").append(getSpecialFilteredUsername(user))
-                    .append(" .");
+            StringBuilder questionBuilder = new StringBuilder().append(Message.askCommand.getWriteQuestionMessage(user,
+                    message));
 
             DatabaseManager.getInstance().setUserCommandState(user.getId(),
                     org.telegram.bot.Config.Bot.NO_COMMAND);
 
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Deine Frage wurde weitergeleitet.");
+            messageBuilder.append(Message.askCommand.getWriteQuestionMessage(user));
 
             question.setChatId(DatabaseManager.getInstance().getAdminChatId().toString());
             question.setText(questionBuilder.toString());
