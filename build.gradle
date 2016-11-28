@@ -56,11 +56,11 @@ dependencies {
 
     compile 'com.github.caprica:vlcj:vlcj-3+'
 
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1+'
-    compile 'org.apache.commons:commons-configuration2:2+'
+    compile 'ch.qos.logback:logback-classic:1.1.7'
+    compile 'org.apache.commons:commons-configuration2:2.1'
     compile 'commons-beanutils:commons-beanutils:1.9.3'
 
-    compile group: 'org.telegram', name: 'telegrambots', version: '2+'
+    compile 'org.telegram:telegrambots:2.4.4'
 }
 
 jar {
