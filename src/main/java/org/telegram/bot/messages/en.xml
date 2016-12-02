@@ -145,4 +145,30 @@
             </case>
         </command_message>
     </command_package>
+    <command_package command="answerCommand">
+        <command_message command="answer_command">
+            <part position="1">Folgende Nachrichten sind zu beantworten:/n></part>
+            <part position="2">/n>Welche Frage möchtest du beantworten (Nummer)?</part>
+        </command_message>
+        <command_message command="choose_number_command">
+            <case case="invalid">
+                <part position="1">Diese Frage ist nicht verfügbar. Bitte schaue Dir die Liste erneut an und wähle eine
+                    gültige Frage.</part>
+            </case>
+            <case case="valid">
+                <part position="1">Du hast die Frage Nummer</part>
+                <part position="2">ausgewählt./n>
+                    Sende mir nun die Antwort, ich werde sie an den Fragesteller weiterleiten.</part>
+            </case>
+        </command_message>
+        <command_message command="write_answer_command">
+            <case case="explanation">
+                <part position="1">Deine Frage war:/n></part>
+                <part position="2">Die Antwort ist:/n></part>
+            </case>
+            <case case="answer">
+                <part position="1">Deine Antwort wurde erfolgreich gesendet.</part>
+            </case>
+        </command_message>
+    </command_package>
 </language>

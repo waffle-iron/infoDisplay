@@ -35,6 +35,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -75,7 +76,8 @@ public class AnswerCommand extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 
-        StringBuilder messageBuilder = new StringBuilder();
+        String message;
+        StringBuilder questionsBuilder = new StringBuilder();
         SendMessage answer = new SendMessage();
 
         try {
@@ -85,20 +87,18 @@ public class AnswerCommand extends BotCommand {
                 return;
             }
 
-            messageBuilder.append("Folgende Nachrichten sind zu beantworten: ").append("\n");
 
             int questions = 1;
 
             for (String question : databaseManager.getQuestions()) {
-                messageBuilder.append(questions).append(". ").append(question).append("\n");
+                questionsBuilder.append(questions).append(". ").append(question).append("\n");
                 questions++;
             }
 
-            messageBuilder.append("\n");
-            messageBuilder.append("Welche Frage möchtest du beantworten (Nummer)?");
+            message = Message.answerCommand.getAnswerMessage(user, questionsBuilder.toString());
 
             answer.setChatId(chat.getId().toString());
-            answer.setText(messageBuilder.toString());
+            answer.setText(message);
 
             databaseManager.setUserCommandState(user.getId(), Config.Bot.ANSWER_COMMAND_CHOOSE_NUMBER);
         } catch (Exception e) {
