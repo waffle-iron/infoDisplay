@@ -62,7 +62,7 @@ public class AnswerCommand extends BotCommand {
      * Set the identifier for the command and a short description.
      */
     public AnswerCommand() {
-        super("answer", "Antworte auf Fragen der Nutzer.");
+        super("answer", "Answer to questions of users.");
     }
 
     /**

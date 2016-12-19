@@ -64,7 +64,7 @@ public class StartCommand extends BotCommand {
      * Set the identifier and a short description.
      */
     public StartCommand() {
-        super("start", "Mit diesem Befehl kannst du den Bot starten");
+        super("start", "The bot starts to interact with you.");
     }
 
     /**

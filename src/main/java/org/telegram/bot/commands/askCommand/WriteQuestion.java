@@ -59,7 +59,8 @@ public class WriteQuestion extends BotCommand {
      * Set the identifier and a short description of the command.
      */
     public WriteQuestion() {
-        super("write_question", "Receive the question from the user, after /ask was executed by him.");
+        super("write_question",
+                 "Receive the question from the user, after /ask was executed by him.");
     }
 
     /**

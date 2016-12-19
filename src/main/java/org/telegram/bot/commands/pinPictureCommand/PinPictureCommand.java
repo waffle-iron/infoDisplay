@@ -59,7 +59,8 @@ public class PinPictureCommand extends BotCommand {
      * Set the identifier and a short description for the bot.
      */
     public PinPictureCommand() {
-        super("pin_picture", "Lade ein Bild an das virtuelle Brett hoch.");
+        super("pin_picture",
+                "Upload an image to the virtual bord.");
     }
 
     /**

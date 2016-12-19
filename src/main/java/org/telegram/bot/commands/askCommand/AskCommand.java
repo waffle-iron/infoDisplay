@@ -59,7 +59,7 @@ public class AskCommand extends BotCommand {
      * Set the identifier and a short description of this bot.
      */
     public AskCommand() {
-        super("ask", "Stelle eine Frage an den Administrator dieses Bots.");
+        super("ask", "Ask a question to the administrator of this bot.");
     }
 
     /**

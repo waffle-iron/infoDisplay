@@ -58,7 +58,8 @@ public class WriteAnswer extends BotCommand {
      * Set the identifier and a short description of the command.
      */
     public WriteAnswer() {
-        super("write_answer", "This command evaluates the answer after a user executed /answer (and ChooseNumber).");
+        super("write_answer",
+                "Evaluate the answer after a user executed /answer (and ChooseNumber).");
     }
 
     /**

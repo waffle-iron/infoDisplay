@@ -65,7 +65,9 @@ public class SendPicture extends BotCommand {
      * Set the identifier and a short description for the command.
      */
     public SendPicture() {
-        super("send_picture", "Saves the photo send by a user after he executed /pin_picture (and SendTitle, SendDescription and SendDuration).");
+        super("send_picture",
+                "Saves the photo send by a user after he executed /pin_picture (and SendTitle, " +
+                        "SendDescription and SendDuration).");
     }
 
     /**

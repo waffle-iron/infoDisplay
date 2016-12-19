@@ -64,7 +64,7 @@ public class CancelCommand extends BotCommand {
      * @param commandRegistry
      */
     public CancelCommand(ICommandRegistry commandRegistry) {
-        super("cancel", "Bricht die aktuelle Aktion ab (zum Beispiel, das Hochladen eines neuen Bildes).");
+        super("cancel", "Cancel the running command (e.g. uploading of a new picture).");
         this.commandRegistry = commandRegistry;
     }
 

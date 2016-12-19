@@ -69,7 +69,7 @@ public class HelpCommand extends BotCommand {
      * @param commandRegistry
      */
     public HelpCommand(ICommandRegistry commandRegistry) {
-        super("help", "Wozu dient dieser Bot und wie kannst du den Bot kontrollieren?");
+        super("help", "Send description of the bot together with a usage guide.");
         this.commandRegistry = commandRegistry;
     }
 
