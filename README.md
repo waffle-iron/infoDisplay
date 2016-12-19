@@ -1,4 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/liketechnik/infoDisplay.png?label=ready&title=Ready)](https://waffle.io/liketechnik/infoDisplay)
+[![Stories in Ready](https://badge.waffle.io/liketechnik/infoDisplay.png?label=ready&title=Ready)](https://waffle.io/liketechnik/infoDisplay)
 ## README ##
 
 This is a telegram bot based on Ruben Bermudez Telegram Bots API. 
