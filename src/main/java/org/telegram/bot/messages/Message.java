@@ -387,4 +387,100 @@ public class Message {
             return config.getString(writeQuestionQuarry + "part[@position=1]").replaceAll("/n>", "\n");
         }
     }
+
+    public static class answerCommand {
+        static final String answerCommandQuarry = "command_package[@command='answerCommand']/";
+
+        public static String getAnswerMessage(User user, String questions) {
+            final String answerQuarry = answerCommandQuarry + "command_message[@command='answer_command']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder answerMessage = new StringBuilder();
+
+            answerMessage.append(config.getString(answerQuarry + "part[@position=1]").replaceAll("/n>",
+                    "\n"));
+
+            answerMessage.append(questions);
+
+            answerMessage.append(config.getString(answerQuarry + "part[@position=2]").replaceAll("/n>",
+                    "\n"));
+
+            return  answerMessage.toString();
+        }
+
+        public static String getChooseNumberMessage(User user) {
+            final String chooseNumberQuarry = answerCommandQuarry + "command_message[@command='choose_number_" +
+                    "command']/case[@case='invalid']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder chooseNumberMessage = new StringBuilder();
+
+            chooseNumberMessage.append(config.getString(chooseNumberQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+
+            return chooseNumberMessage.toString();
+        }
+
+        public static String getChooseNumberMessage(User user, int selectedQuestion) {
+            final String chooseNumberQuarry = answerCommandQuarry + "command_message[@command='choose_number_" +
+                    "command']/case[@case='valid']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder chooseNumberMessage = new StringBuilder();
+
+            chooseNumberMessage.append(config.getString(chooseNumberQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+
+            chooseNumberMessage.append(" ").append(selectedQuestion);
+
+            chooseNumberMessage.append(config.getString(chooseNumberQuarry + "part[@position=2]")
+                    .replaceAll("/n>", "\n"));
+
+            return chooseNumberMessage.toString();
+        }
+
+        public static String getWriteAnswerMessage(User user, int selectedQuestion, String message) {
+            final String writeAnswerQuarry = answerCommandQuarry + "command_message[@command='write_answer_command']/" +
+                    "case[@case='explanation']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder writeAnswerMessage = new StringBuilder();
+
+            writeAnswerMessage.append(config.getString(writeAnswerQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+
+            try {
+                writeAnswerMessage.append(DatabaseManager.getInstance().getQuestion(selectedQuestion -1));
+            } catch (Exception e) {
+                BotLogger.error(LOGTAG, "Failed to get question.");
+            }
+
+            writeAnswerMessage.append("\n\n");
+
+            writeAnswerMessage.append(config.getString(writeAnswerQuarry + "part[@position=2]")
+                    .replaceAll("/n>", "\n"));
+
+            writeAnswerMessage.append(message);
+
+            return writeAnswerMessage.toString();
+        }
+
+        public static String getWriteAnswerMessage(User user) {
+            final String writeAnswerQuarry = answerCommandQuarry + "command_message[@command='write_answer_command']/" +
+                    "case[@case='answer']/";
+
+            XMLConfiguration config = getXmlConfiguration(user.getId());
+
+            StringBuilder writeAnswerMessage = new StringBuilder();
+
+            writeAnswerMessage.append(config.getString(writeAnswerQuarry + "part[@position=1]")
+                    .replaceAll("/n>", "\n"));
+
+            return writeAnswerMessage.toString();
+        }
+    }
 }
