@@ -58,7 +58,8 @@ public class SendDescription extends BotCommand {
      * Set the identifier and a short description for the command.
      */
     public SendDescription() {
-        super("send_description", "Evaluates the answer after a user executed /pin_picture (and SendTitle).");
+        super("send_description",
+                "Evaluates the answer after a user executed /pin_picture (and SendTitle).");
     }
 
     /**

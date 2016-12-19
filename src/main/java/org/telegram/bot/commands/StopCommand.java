@@ -61,7 +61,7 @@ public class StopCommand extends BotCommand {
      * Set the identifier and a short description.
      */
     public StopCommand() {
-        super("stop", "Mit diesem Befehl kannst du den Bot anhalten.");
+        super("stop", "Stops the bot from interacting with you.");
     }
 
     /**

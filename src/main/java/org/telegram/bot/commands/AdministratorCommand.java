@@ -60,7 +60,7 @@ public class AdministratorCommand extends BotCommand {
      * Set the identifier for the command and a short description.
      */
     public AdministratorCommand() {
-        super("administrator", "Lass dir den Benutzername vom Administrator / Ersteller dieses Bots anzeigen.");
+        super("administrator", "Send the username of the administrator of this bot.");
     }
 
     /**

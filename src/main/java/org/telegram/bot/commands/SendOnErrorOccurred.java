@@ -59,7 +59,7 @@ public class SendOnErrorOccurred extends BotCommand {
      * Send the identifier and a short description.
      */
     public SendOnErrorOccurred() {
-        super("send_error_occurred", "This command gets executed when an error happens while executing a command.");
+        super("send_error_occurred", "Inform the user of the appearance of an error.");
     }
 
     /**

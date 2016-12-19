@@ -57,7 +57,7 @@ public class IDCommand extends BotCommand {
      * Set the identifier and a short description.
      */
     public IDCommand() {
-        super("ids", "Zeigt dir deine Telgramm UserID und die ChatID dieses Chats an.");
+        super("ids", "Send the Telegram user and chat ID.");
     }
 
     /**

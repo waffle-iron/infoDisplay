@@ -58,7 +58,8 @@ public class ChooseNumber extends BotCommand {
      * Set the identifier and a short description for the command.
      */
     public  ChooseNumber() {
-        super("choose_number", "Evaluate the answer of user who executed /answer.");
+        super("choose_number",
+                "Evaluate the answer of user who executed /answer.");
     }
 
     /**

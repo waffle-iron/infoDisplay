@@ -63,7 +63,7 @@ public class RegisterCommand extends BotCommand {
      * Set the identifier and short description.
      */
     public RegisterCommand() {
-        super("register", "Registriere dich als Benutzer um Bilder auf das virtuelle Brett hochladen zu können.");
+        super("register", "Register as a valid user of this bot for using it properly.");
     }
 
     /**

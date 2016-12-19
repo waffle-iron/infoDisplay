@@ -60,7 +60,8 @@ public class SendTitle extends BotCommand {
      * Set the identifier for the command and a short description.
      */
     public SendTitle() {
-        super("send_title", "Evaluates the answer after a user executed /pin_picture.");
+        super("send_title", "Evaluates the answer after a user executed " +
+                "/pin_picture.");
     }
 
     /**
