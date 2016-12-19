@@ -54,8 +54,8 @@ srcclr {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    compile 'com.github.caprica:vlcj:vlcj-3+'
-
+    compile 'com.github.caprica:vlcj:vlcj-3.10.+'
+    
     compile 'ch.qos.logback:logback-classic:1.1.7'
     compile 'org.apache.commons:commons-configuration2:2.1'
     compile 'commons-beanutils:commons-beanutils:1.9.3'
@@ -91,6 +91,14 @@ task createBotJarArchive(type: Jar, dependsOn: [':build', ':updateDisplayFileCla
     classifier 'Bot'
     into ''
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+task copyLangFiles(type: Copy) {
+    from 'src/main/java/org/telegram/bot/messages/'
+    include '**.xml'
+    include 'language.xsd'
+    exclude '**.java'
+    into 'build/classes/main/org/telegram/bot/messages/'
 }
 
 //task updateDisplayFileClass(type: Copy) {

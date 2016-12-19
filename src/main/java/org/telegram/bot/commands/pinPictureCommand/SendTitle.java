@@ -34,6 +34,7 @@ package org.telegram.bot.commands.pinPictureCommand;
 import liketechnik.InfoDisplay.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -87,14 +88,14 @@ public class SendTitle extends BotCommand {
             String displayFileName;
             displayFileName = message + ".jpg";
 
-            messageBuilder.append("Sende mir nun bitte eine (kurze) Beschreibung / Überschrift für das Bild.");
+            messageBuilder.append(Message.pinPictureCommand.getSendTitleMessage(user, true));
 
             try {
                 databaseManager.setCurrentPictureTitle(user.getId(), displayFileName);
                 databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_DESCRIPTION);
             } catch (FileAlreadyExistsException e) {
                 messageBuilder = new StringBuilder();
-                messageBuilder.append("Dieser Name wurde schon für ein Bild gewählt, bitte sende mir einen anderen.");
+                messageBuilder.append(Message.pinPictureCommand.getSendTitleMessage(user, false));
             }
 
             answer.setChatId(chat.getId().toString());

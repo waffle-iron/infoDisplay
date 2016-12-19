@@ -36,9 +36,9 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.telegram.bot.Config;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
@@ -49,7 +49,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha
@@ -91,12 +90,7 @@ public class HelpCommand extends BotCommand {
 
             StringBuilder messageBuilder = new StringBuilder();
 
-            messageBuilder.append("<b>Hilfe</b>").append("\n\n");
-            messageBuilder.append("Beschreibung:").append("\n");
-            messageBuilder.append("Mit diesem Bot kannst Du Bilder an das virtuelle Brett hochladen. Als Administrator " +
-                    "kannst du auch veraltete Bilder anderer löschen und deren Eigenschaften bearbeiten.").append("\n\n");
-
-            messageBuilder.append("So kannst du mich nutzen:").append("\n");
+            messageBuilder.append(Message.getHelpMessage(user));
 
             for (BotCommand botCommand : commandRegistry.getRegisteredCommands()) {
                 if (!botCommand.getCommandIdentifier().equals("help") &&
@@ -105,8 +99,8 @@ public class HelpCommand extends BotCommand {
                         !botCommand.getCommandIdentifier().equals("ids") &&
                         !botCommand.getCommandIdentifier().equals("answer")) {
 
-                    messageBuilder.append("/").append(botCommand.getCommandIdentifier()).append(":\n    ")
-                            .append(botCommand.getDescription()).append("\n");
+                    messageBuilder.append("/").append(botCommand.getCommandIdentifier().replace("_", "\\_"));
+                    messageBuilder.append(":\n    ").append(botCommand.getDescription()).append("\n");
                 }
             }
 
@@ -117,7 +111,7 @@ public class HelpCommand extends BotCommand {
             }
 
             answer.setChatId(chat.getId().toString());
-            answer.enableHtml(true);
+            answer.enableMarkdown(true);
             answer.setText(messageBuilder.toString());
 
         } catch (Exception e) {

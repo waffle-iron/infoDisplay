@@ -34,6 +34,7 @@ package org.telegram.bot.commands.askCommand;
 import org.telegram.bot.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -42,7 +43,6 @@ import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha
@@ -82,7 +82,7 @@ public class AskCommand extends BotCommand {
             databaseManager.setUserState(user.getId(), true);
 
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Sende mir bitte deine Frage, ich leite sie an den Administrator weiter.");
+            messageBuilder.append(Message.askCommand.getAskMessage(user));
 
             databaseManager.setUserCommandState(user.getId(), Config.Bot.ASK_COMMAND_WRITE_QUESTION);
 

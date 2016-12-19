@@ -34,6 +34,7 @@ package org.telegram.bot.commands.pinPictureCommand;
 import org.telegram.bot.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.GetFile;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
@@ -91,11 +92,11 @@ public class SendPicture extends BotCommand {
                 databaseManager.createNewDisplayFile(absSender, user.getId(), arguments[1],
                         Config.Bot.DISPLAY_FILE_TYPE_IMAGE);
 
-                messageBuilder.append("Du hast ein neues Bild an das Brett hochgeladen.").append("\n").append("/help");
+                messageBuilder.append(Message.pinPictureCommand.getSendPictureMessage(user, true));
 
                 databaseManager.setUserCommandState(user.getId(), Config.Bot.NO_COMMAND);
             } else {
-                messageBuilder.append("Sende mir bitte ein Bild.");
+                messageBuilder.append(Message.pinPictureCommand.getSendPictureMessage(user, false));
             }
 
             answer.setChatId(chat.getId().toString());

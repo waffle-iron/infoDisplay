@@ -35,6 +35,7 @@ import org.telegram.bot.Config;
 import org.telegram.bot.DisplayBot;
 import org.telegram.bot.Main;
 import org.telegram.bot.ResetRecentlyError;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -61,10 +62,8 @@ public class SendOnErrorOccurred extends BotCommand {
         super("send_error_occurred", "This command gets executed when an error happens while executing a command.");
     }
 
-
     /**
      * Inform the user that an error occurred and set his command status to {@link Config.Bot#NO_COMMAND}.
-     *
      * @param absSender
      * @param user
      * @param chat
@@ -80,11 +79,9 @@ public class SendOnErrorOccurred extends BotCommand {
 
         if (ResetRecentlyError.getRecentlyError()) {
             ResetRecentlyError.setAppIsTerminating(true);
-            messageBuilder.append("Der Bot ist aufgrund eines Fehlers beendet worden. Bitte informiere den " +
-                    "Administrator.");
+            messageBuilder.append(Message.getSendOnErrorOccurredMessage(user, true));
         } else {
-            messageBuilder.append("Es ist ein interner Fehler aufgetreten, bitte informiere den Administrator dieses " +
-                    "Bots darüber.");
+            messageBuilder.append(Message.getSendOnErrorOccurredMessage(user, false));
         }
 
         answer.setText(messageBuilder.toString());

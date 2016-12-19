@@ -184,6 +184,45 @@ public class DatabaseManager {
     }
 
     /**
+     * User changed his language preference.
+     * Save the language preference for a user in his configuration file.
+     * @param userId UserId of the user who's language preference changed.
+     * @param language The language that the user wants to receive his messages in.
+     * @see #getUserLanguage(Integer userId) Get the language prefernce of a user.
+     */
+    public void setUserLanguage(Integer userId, String language) throws Exception {
+        if (!language.equals(Config.Languages.ENGLISH) &&
+                !language.equals(Config.Languages.GERMAN) &&
+                !language.equals(Config.Languages.NONE)) {
+            throw new IllegalArgumentException("No supported language.");
+        }
+
+        setCurrentConfiguration(userId);
+
+        try {
+            currentConfiguration.setProperty(Config.Keys.USER_LANGUAGE, language);
+        } catch (NullPointerException e) {
+            currentConfiguration.addProperty(Config.Keys.USER_LANGUAGE, language);
+        }
+
+        currentBuilder.save();
+    }
+
+    /**
+     * Looks up in which language a user wants to receive his messages.
+     * @param userId UserID of the user who's language preference should be looked up.
+     * @return The language the messages send to the user should have.
+     * @see #setUserLanguage(Integer userId, String language) Set the language preference for a user.
+     */
+    public String getUserLanguage(Integer userId) throws Exception {
+        setCurrentConfiguration(userId);
+        if (currentConfiguration.getString(Config.Keys.USER_LANGUAGE).equals(Config.Languages.NONE)) {
+            throw new IllegalArgumentException("No language preference set for this user.");
+        }
+        return currentConfiguration.getString(Config.Keys.USER_LANGUAGE);
+    }
+
+    /**
      * Sets the configuration for a file on which operations take place.
      * This methods automates setting of the {@link #currentBuilder builder}.
      * @param configurationFile File from where the configuration is loaded.

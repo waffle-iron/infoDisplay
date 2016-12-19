@@ -34,9 +34,9 @@ package org.telegram.bot.commands.answerCommand;
 import liketechnik.InfoDisplay.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
@@ -89,8 +89,7 @@ public class ChooseNumber extends BotCommand {
                     throw new NumberFormatException("This question is not available.");
                 }
             } catch (NumberFormatException e) {
-                messageBuilder.append("Diese Frage ist nicht verfügbar. Bitte schaue Dir die Liste erneut an und " +
-                        "wähle eine gültige Frage.");
+                messageBuilder.append(Message.answerCommand.getChooseNumberMessage(user));
 
                 answer.setChatId(chat.getId().toString());
                 answer.setText(messageBuilder.toString());
@@ -108,9 +107,7 @@ public class ChooseNumber extends BotCommand {
                     Config.Bot.ANSWER_COMMAND_WRITE_ANSWER);
             databaseManager.setSelectedQuestion(user.getId(), selectedQuestion);
 
-            messageBuilder.append("Du hast die Frage Nummer ").append(selectedQuestion).append(" ausgewählt.");
-            messageBuilder.append("\n").append("Sende mir nun die Antwort, ich werde sie an den Fragesteller " +
-                    "weiterleiten.");
+            messageBuilder.append(Message.answerCommand.getChooseNumberMessage(user, selectedQuestion));
 
             answer.setChatId(chat.getId().toString());
             answer.setText(messageBuilder.toString());

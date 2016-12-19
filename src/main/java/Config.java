@@ -31,16 +31,8 @@
 
 //packageStatement*
 
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static com.sun.org.apache.xml.internal.security.utils.Constants.configurationFile;
 
 /**
  * @author Florian Warzecha
@@ -57,8 +49,9 @@ public final class Config {
         public static final String USER_ACTIVE = "userActive";
         public static final String USER_REGISTERED = "userRegistered";
         public static final String USER_WANTS_REGISTRATION = "userWantsregistration";
-
         public static final String USER_COMMAND_STATE = "userState";
+        public static final String USER_LANGUAGE = "userLanguage";
+
         public final static String QUESTION = "question";
 
         public static final String CHAT_ID = "chatID";
@@ -113,5 +106,19 @@ public final class Config {
         public static final Path QUESTION_DATABASE = FileSystems.getDefault().getPath(BOT_DATABASE + "/questions");
 
         public static final Path BOT_CONFIG_FILE = FileSystems.getDefault().getPath(APP_HOME + "/bot.conf");
+    }
+
+    public static final class Languages {
+        public static final String ENGLISH = "en";
+        public static final String GERMAN = "ger";
+
+        public static final String NONE = "none";
+    }
+
+    public static final class registerCommandIfClauses {
+        public static final String alreadyRegisterd = "alreadyRegistered";
+        public static final String registrationRequestSent = "registrationRequestSent";
+        public static final String sendRegistrationRequest = "sendRegistrationRequest";
+        public static final String toAdmin = "toAdmin";
     }
 }

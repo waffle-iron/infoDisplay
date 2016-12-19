@@ -33,6 +33,7 @@ package org.telegram.bot.commands;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -43,7 +44,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 import java.io.IOException;
 
-import static org.telegram.bot.Main.sendOnErrorOccurred;
 
 /**
  * @author Florian Warzecha
@@ -79,9 +79,7 @@ public class AdministratorCommand extends BotCommand {
             DatabaseManager.getInstance().setUserState(user.getId(), true);
 
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Ersteller / Administrator dieses Bots ist @liketechnik2000.");
-            messageBuilder.append("\n").append("/help");
-
+            messageBuilder.append(Message.getAdministratorMessage(user));
             answer.setChatId(chat.getId().toString());
             answer.setText(messageBuilder.toString());
         // catch every error that could occur, log it and inform the user about the occurrence of an error.

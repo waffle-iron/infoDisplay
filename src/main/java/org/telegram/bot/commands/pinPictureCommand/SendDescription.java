@@ -34,6 +34,7 @@ package org.telegram.bot.commands.pinPictureCommand;
 import liketechnik.InfoDisplay.Config;
 import org.telegram.bot.commands.SendOnErrorOccurred;
 import org.telegram.bot.database.DatabaseManager;
+import org.telegram.bot.messages.Message;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -84,7 +85,7 @@ public class SendDescription extends BotCommand {
 
             databaseManager.setCurrentPictureDescription(user.getId(), message);
 
-            messageBuilder.append("Sende mir nun die Anzeigedauer des Bildes.");
+            messageBuilder.append(Message.pinPictureCommand.getSendDescriptionMessage(user));
 
             databaseManager.setUserCommandState(user.getId(), Config.Bot.PIN_PICTURE_COMMAND_SEND_DURATION);
 
